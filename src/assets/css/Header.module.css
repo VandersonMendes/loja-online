@@ -1,0 +1,27 @@
+.header{
+    background: rgb(249,143,36);
+    background: linear-gradient(90deg, rgba(249,143,36,1) 40%, rgba(207,93,0,1) 100%);
+    padding: 1.1rem 0;
+}
+.amout{
+    position: relative;
+    background-color: #F9CA24;
+    padding: 0.3rem 0.8rem;
+    right: 15px;
+    bottom: 2rem;
+    border-radius: 200px;
+}
+@media (max-width:600px) {
+    .amout{
+        position: relative;
+        background-color: #F9CA24;
+        right: 10px;
+        bottom: 1.8rem;
+        font-size: 14px;
+
+    }
+    .buttomBuscar{
+        display: none;
+        text-align: center;
+    }
+}

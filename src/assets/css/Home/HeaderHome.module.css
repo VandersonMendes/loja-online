@@ -1,0 +1,87 @@
+.headerFlex{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem 0;
+}
+.headerFlex nav{
+    display: flex;
+    gap: 20px;
+}
+
+.headerFlex nav a,
+.headerFlex nav button{
+    font-size: 14pt;
+    color: #000;
+    padding: 0.5rem 1rem;
+    border: none;
+    display: flex;
+    gap: 10px;
+    position: relative;
+    align-items: center;
+    background-color: transparent;
+    cursor: pointer;
+}
+.headerFlex nav a:hover,
+.headerFlex nav button:hover{
+    opacity: 0.8;
+}
+.headerFlex nav a img,
+.headerFlex nav button img{
+    max-width: 32px;
+    width: 95%;
+
+}
+.amout{
+    position: absolute;
+    left: 38px;
+    top: -2px;
+    font-size: 13px;
+    background-color: #f98f24;
+    border-radius: 200px;
+    padding: 2px 10px;
+}
+.logo{
+    max-width: 30rem;
+    min-width: 10rem;
+    width: 20%;
+}
+@media (max-width:900px) {
+    .headerFlex nav a{
+        font-size: 10pt;
+    }
+    .headerFlex nav a img{
+        max-width: 25px;
+        width: 95%;
+    }
+    .amout{
+        left: 32px;
+        font-size: 10px;
+    }
+}
+
+@media (max-width:600px) {
+    .headerFlex nav{
+        display: flex;
+        gap: 0;
+    }
+    .logo{
+        min-width: 6rem;
+    }
+}
+@media (max-width:400px) {
+    .headerFlex nav{
+        display: flex;
+    }
+    .headerFlex nav a img{
+        min-width: 23px;
+        width: 95%;
+    }
+    .headerFlex nav a {
+        padding: 0.3rem 0.5rem;
+    }
+    .amout{
+        left: 22px;
+        font-size: 10px;
+    }
+}

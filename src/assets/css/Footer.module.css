@@ -1,0 +1,17 @@
+.footer{
+    background: #383838;
+    padding: 1rem 0;
+}
+.footer img{
+    width: 20%;
+}
+.footerFlex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.footerFlex h2{
+    color: #fff;
+    font-weight: 100;
+}
