@@ -1,17 +1,29 @@
 .footer{
     background: #383838;
-    padding: 1rem 0;
+    padding: 2rem 0;
+    color: #fff;
 }
 .footer img{
     width: 20%;
 }
-.footerFlex{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-}
 .footerFlex h2{
     color: #fff;
     font-weight: 100;
+}
+.formFooter{
+    position: relative;
+}
+.formFooter input{
+    background-color: transparent;
+    padding-bottom: 15px;
+    color: #ffff;
+    border: none;
+    border-bottom: 2px solid #f9ca24;
+    border-radius: 0;
+    margin-bottom: 1rem;
+}
+.imgFooter{
+    position: absolute;
+    left: -4rem;
+    bottom:10px;
 }

@@ -14,10 +14,10 @@ export const  getProductsFromCategory = async (categoryId) => {
   }
 
 // GET puxar produtos individualmente
-export const getProdutos = async (type, type2) => {
+export const getProdutosID = async (id) => {
   try {
     const response = await axios.get(
-      `https://api.mercadolibre.com/sites/MLB/search?q=${type}%20${type2}}`
+      `https://api.mercadolibre.com/items/${id}}`
     );
     return response;
   } catch (err) {

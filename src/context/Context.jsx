@@ -5,10 +5,11 @@ export function AppProvider ({ children }) {
     const [ loading, setLoading] = useState(null);
     const [desejos, setDesejos] = useState(null);
     const [carrinho, setCarrinho] = useState(null);
-    const [desejosID, setDesejosID] = useState(null);
     const [carrinhoID, setCarrinhoID] = useState(null);
+    const [categoryId, setCategoryId] = useState(null);
+    const [category, setCategory] = useState(null);
   return (
-    <AppContext.Provider value={{loading, setLoading, carrinho, setCarrinho, desejos, setDesejos, desejosID, setCarrinhoID, setDesejosID, carrinhoID}}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{loading, setLoading, carrinho, setCarrinho, desejos, setDesejos, setCarrinhoID, carrinhoID, categoryId, setCategoryId, category, setCategory}}>{children}</AppContext.Provider>
   )
 }
 export function useAppProvider() {

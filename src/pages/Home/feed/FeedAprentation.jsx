@@ -16,11 +16,11 @@ const FeedAprentation = () => {
           </picture>
       
           <div className={styles.text}>
-            <StyledH1 color="#383838" lineHeight="40px">Tênis Casual</StyledH1>
-            <StyledH2 color="#CF5D00" weight="100">Masculino</StyledH2>
+            <StyledH1 color="#383838" lineHeight="40px" lineHeight1="20px">Tênis Casual</StyledH1>
+            <StyledH2 color="#CF5D00" weight="400">Masculino</StyledH2>
             <div className={styles.preco}>
-              <StyledSpan weight="800" color="#383838" >A parti de </StyledSpan>
-              <StyledH3 color="#383838" >R$ 79,99</StyledH3>
+              <StyledSpan weight="800" color="#383838" fontSize="1.3rem">A parti de </StyledSpan>
+              <StyledH3 color="#383838" lineHeight="40px"  lineHeight1="25px"   lineHeight2="15px">R$ 79,99</StyledH3>
               <StyledButton fontSize="1.5rem" color="#ffffff" BorderColor="#CF5D00">APROVEITE</StyledButton>
             </div>
           </div>

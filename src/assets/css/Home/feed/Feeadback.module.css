@@ -1,0 +1,17 @@
+.feeadback{
+    background: rgb(249,143,36);
+    background: linear-gradient(90deg, rgba(249,143,36,1) 40%, rgba(207,93,0,1) 100%);
+}
+.containerFeeadback{
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 4rem;
+}
+.feeadback h2{
+    padding: 2rem 0;
+}
+.text p, h4{
+    padding: 1rem;
+    border-radius: 15px;
+}

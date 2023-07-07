@@ -8,8 +8,10 @@ export const StyledInput = styled.input`
   padding: 1.4rem 1rem;
   border: 2px solid ${(props) => props.colorBorder};
   font-size: 18px;
-  margin-left: 10px;
-  &:hover {
+  outline:none;
+
+  background-color${(prosp) => prosp.backgroudColor}
+  &:focus {
     border-color: #f9ca24;
     transition: 209ms ease-in;
   }

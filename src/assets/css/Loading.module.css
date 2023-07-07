@@ -1,0 +1,32 @@
+.loading{
+    width: 70px;
+    height: 70px;
+    background-color:transparent;
+    display: block;
+    position: fixed;
+    left: 50vw;
+    top:70%;
+    border-radius: 200px;
+    border: 12px solid #F9CA24;
+    border-top: 12px solid transparent;
+    animation: loadingIfininite 900ms linear  infinite;
+}
+@keyframes loadingIfininite {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+@media (max-width:900px) {
+    .loading{
+        left: 45vw;
+    }
+}
+@media (max-width:600px) {
+    .loading{
+        width: 50px;
+        height: 50px;
+    }
+}

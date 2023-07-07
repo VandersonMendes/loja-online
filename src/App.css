@@ -28,3 +28,27 @@ img {
 body {
   background-color: light;
 }
+.animeLeft {
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: animeLeft 1s forwards ease-in;
+}
+
+@keyframes animeLeft {
+  to {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+.animeTop {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: animeTop 1s forwards ease-in;
+}
+
+@keyframes animeTop {
+  to {
+    opacity: 1;
+    transform: translate(0);
+  }
+}

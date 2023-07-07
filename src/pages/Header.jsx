@@ -20,7 +20,7 @@ const Header = () => {
           alignitens="center"
           wrap="wrap"
         >
-          <StyledH3 color="white" weight="400">
+          <StyledH3 color="white" weight="400" fontSize="2.25rem">
             <a href="/" style={{ color: "white" }}>
               LOGO
             </a>
@@ -34,7 +34,7 @@ const Header = () => {
       </div>
       {/* Procurar os produtos, e entra no carrinho para vizualizar produtos colocados.*/}
       <StyledFlex
-        className="container"
+        className={`${'container'} ${styles.flex}`}
         justifycontent="space-around"
         alignitens="center"
         padding="2rem 0"
