@@ -30,7 +30,7 @@ export const StyledH1 = styled.h1`
 `
 export const StyledH2 = styled.h2`
     @media (min-width:1400px) {
-        font-size:3.5rem;
+        font-size: ${(prosp) => prosp.fontSize || '3.5rem'};
     }
     font-size: 3rem;
     letter-spacing: ${(prosp) => prosp.letterSpacing};
@@ -62,6 +62,7 @@ export const StyledH3 = styled.h3`
     letter-spacing: ${(prosp) => prosp.letterSpacing};
     color: ${(prosp) => prosp.color};
     font-weight: ${(prop) => prop.weight};
+    background-color:${(prosp) => prosp.backgroundColor};
     line-height: ${(prosp) => prosp.lineHeight};
     cursor: pointer;
     @media (max-width:1200px) {

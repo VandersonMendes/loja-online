@@ -5,8 +5,12 @@ import feedResponsivoMobile from "../../../assets/img/feedResponsivo.png"
 import styles from "../../../assets/css/Home/feed/FeedApresentation.module.css"
 import { StyledButton } from "../../../componentes/Buttom.style"
 import { StyledH1, StyledH2, StyledSpan, StyledH3 } from "../../../componentes/Font.style"
-import { StyledImg } from "../../../componentes/Img.style"
+import { StyledImg } from "../../../componentes/Img.style";
+import { useNavigate } from "react-router-dom";
+import { useAppProvider } from "../../../context/Context";
 const FeedAprentation = () => {
+  const navigate = useNavigate();
+  const {setSearch} = useAppProvider();
   return (
       <div className={`${styles.feedApresentation}`}>
           <picture>
@@ -20,8 +24,12 @@ const FeedAprentation = () => {
             <StyledH2 color="#CF5D00" weight="400">Masculino</StyledH2>
             <div className={styles.preco}>
               <StyledSpan weight="800" color="#383838" fontSize="1.3rem">A parti de </StyledSpan>
-              <StyledH3 color="#383838" lineHeight="40px"  lineHeight1="25px"   lineHeight2="15px">R$ 79,99</StyledH3>
-              <StyledButton fontSize="1.5rem" color="#ffffff" BorderColor="#CF5D00">APROVEITE</StyledButton>
+              <StyledH3 fontSize="2.9rem" weight="bold" color="#383838" lineHeight="45px"  lineHeight1="25px"   lineHeight2="15px">R$ 79,99</StyledH3>
+              <StyledButton fontSize="1.5rem" color="#ffffff" BorderColor="#CF5D00" onClick={() => {
+                // Quando aperta os botão irá redimensionar para, produto e ainda irá aparecer produtos relacionados.
+                  navigate('/products');
+                  setSearch('sapato lascoste')
+              }}>APROVEITE</StyledButton>
             </div>
           </div>
       </div>

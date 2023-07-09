@@ -33,7 +33,7 @@ const ProdutosDestaques = () => {
     setProdutos(data.data.results.slice(0, 4));
     setLoading(false);
   };
-
+  
   // Esse efeito será será responsável de puxar as categorias, quando abri o site
   useEffect(() => {
     getCategory();
@@ -47,9 +47,15 @@ const ProdutosDestaques = () => {
 
   return (
     <div className={`${styles.destaques} ${"container"}`}>
-      <StyledH2 color="#fff" backgroundColor="#CF5D00">
-        Talvez te interesaa
-      </StyledH2>
+      <StyledFlex alignitens="flex-end" justifycontent="space-between">
+        <StyledH2 color="#fff" backgroundColor="#CF5D00">
+          Talvez te interesaa
+        </StyledH2>
+        <StyledH4 color="#CF5D00" backgroundColor="#555555e" onClick={() => navigate('/products')}>
+          Ver tudo
+        </StyledH4>
+
+      </StyledFlex>
       <StyledFlex
         gap="1rem"
         alignitens="center"
@@ -120,7 +126,10 @@ const ProdutosDestaques = () => {
             color="#383838"
             padding="0.1rem 0.5rem"
             style={{ textAlign: "center" }}
-            onClick={() => navigate("/products")}
+            onClick={() => {
+              navigate("/products");
+              setCarrinhoID(categoryId);
+            }}
           >
             Ver mais
           </StyledButton>

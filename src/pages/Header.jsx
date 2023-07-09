@@ -8,8 +8,26 @@ import { StyledImg } from "../componentes/Img.style";
 import { StyledInput } from "../componentes/Input.style";
 import IconCarrinho from "../assets/img/carrinhoDeCompra.svg";
 import { StyledButton } from "../componentes/Buttom.style";
-
+import { useState } from "react";
+import { useAppProvider } from "../context/Context";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
+  const navigate = useNavigate()
+  const [valueSearch, setValueSearch] = useState(null);
+  const {setSearch,search} = useAppProvider();
+  const HandleInput = ({target}) =>{
+    setValueSearch(target.value)
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setSearch(valueSearch)
+    console.log(search)
+    // caso tenha algun valor dentro de input de busca, vai navegar para pagina de produtos e puxar os produto que estão dentro do input
+    if(valueSearch){
+      navigate('/products')
+    }
+
+  }
   return (
     <header>
       <div className={styles.header}>
@@ -40,13 +58,14 @@ const Header = () => {
         padding="2rem 0"
         gap="3rem"
       >
-        <form>
+        <form onSubmit={handleSubmit}>
           <StyledFlex gap="0.5rem">
             <StyledInput
               type="text"
               colorBorder="#000000"
               padding="0.2rem"
               placeholder="Estou buscando.."
+              onChange={HandleInput}
             />
             <StyledButton
               padding="0 1rem"

@@ -31,7 +31,7 @@ body {
 .animeLeft {
   opacity: 0;
   transform: translateX(-20px);
-  animation: animeLeft 1s forwards ease-in;
+  animation: animeLeft 1s forwards ease-in-out;
 }
 
 @keyframes animeLeft {
@@ -43,7 +43,7 @@ body {
 .animeTop {
   opacity: 0;
   transform: translateY(-20px);
-  animation: animeTop 1s forwards ease-in;
+  animation: animeTop 1s forwards ease-in ;
 }
 
 @keyframes animeTop {

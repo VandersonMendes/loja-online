@@ -2,8 +2,7 @@ import axios from "axios";
 
 // get Categorias 
 export async function getCategories() {
-  const ENDPOINT = "https://api.mercadolibre.com/sites/MLB/categories";
-  const response = await axios.get(ENDPOINT);
+  const response = await axios.get('https://api.mercadolibre.com/sites/MLB/categories');
   return await response.data;
 }
 // GET produtos que vem na categoria
@@ -18,6 +17,17 @@ export const getProdutosID = async (id) => {
   try {
     const response = await axios.get(
       `https://api.mercadolibre.com/items/${id}}`
+    );
+    return response;
+  } catch (err) {
+    console.log("error: " + err);
+  }
+};
+// GET produtos pelo name
+export const getProdutos = async (name) => {
+  try {
+    const response = await axios.get(
+      `https://api.mercadolibre.com/sites/MLB/search?q=${name}`
     );
     return response;
   } catch (err) {
