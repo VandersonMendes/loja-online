@@ -4,7 +4,14 @@
     padding: 0.4rem 0;
 }
 .flex{
-    margin: 3rem auto;
+    position: fixed;
+    top: 2rem;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    display: flex;
+    justify-content: space-around;
+    padding:2rem 0;
 }
 .amout{
     position: relative;

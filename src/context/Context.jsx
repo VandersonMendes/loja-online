@@ -9,17 +9,19 @@ export function AppProvider({ children }) {
   const [categoryId, setCategoryId] = useState(null);
   const [category, setCategory] = useState(null);
   const [search, setSearch] = useState(null);
-  const [productList, setProductList] = useState([]);
-  const [result, setResult] = useState(null)
+  const [productListId, setProductListId] = useState([]);
   useEffect(() => {
-    AddList();
+    const carrinhoSalvo = localStorage.getItem('listId')
+    if(carrinhoSalvo){
+      setResult(JSON.parse(carrinhoSalvo))
+      
+    }
+  }, []);
+
+  useEffect(() => {
+    carrinho && productListId.push(carrinhoID);
+    localStorage.setItem('listId', JSON.stringify(productListId));
   }, [carrinhoID]);
-  const AddList = () => {
-    const newList = productList
-    carrinho && newList.push(carrinhoID);
-    window.localStorage.setItem('list', JSON.stringify(newList))
-    
-  };
 
   return (
     <AppContext.Provider
@@ -38,9 +40,8 @@ export function AppProvider({ children }) {
         setCategory,
         search,
         setSearch,
-        productList,
-        setProductList,
-        AddList,
+        productListId,
+        setProductListId,
       }}
     >
       {children}

@@ -8,13 +8,13 @@ import { StyledImg } from "../componentes/Img.style";
 import { StyledInput } from "../componentes/Input.style";
 import IconCarrinho from "../assets/img/carrinhoDeCompra.svg";
 import { StyledButton } from "../componentes/Buttom.style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppProvider } from "../context/Context";
 import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate()
   const [valueSearch, setValueSearch] = useState(null);
-  const {setSearch,search, productList, carrinho} = useAppProvider();
+  const {setSearch,search, productListId, carrinho} = useAppProvider();
   const HandleInput = ({target}) =>{
     setValueSearch(target.value)
   }
@@ -26,12 +26,10 @@ const Header = () => {
     if(valueSearch){
       navigate('/products')
     }
-
   }
   return (
     <header>
       <div className={styles.header}>
-        {/* Logo, localizaçar distribuidora */}
         <StyledFlex
           className="container"
           justifycontent="space-around"
@@ -50,13 +48,12 @@ const Header = () => {
           </StyledFlex>
         </StyledFlex>
       </div>
-      {/* Procurar os produtos, e entra no carrinho para vizualizar produtos colocados.*/}
+
       <StyledFlex
         className={`${'container'} ${styles.flex}`}
-        justifycontent="space-around"
-        alignitens="center"
-        padding="2rem 0"
-        gap="3rem"
+        // justifycontent="space-around"
+        // alignitens="center"
+        // gap="3rem"
       >
         <form onSubmit={handleSubmit}>
           <StyledFlex gap="0.5rem">
@@ -87,7 +84,7 @@ const Header = () => {
             src={IconCarrinho}
             alt="Icone carrinho"
           />
-          <span className={styles.amout} >{carrinho ? (productList.length + 1):( 0) }</span>
+          <span className={styles.amout} >{carrinho ? (productListId.length + 1):( 0) }</span>
         </Link>
       </StyledFlex>
     </header>
