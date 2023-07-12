@@ -1,9 +1,8 @@
 import axios from "axios";
-
 // get Categorias 
 export async function getCategories() {
   const response = await axios.get('https://api.mercadolibre.com/sites/MLB/categories');
-  return await response.data;
+  return response;
 }
 // GET produtos que vem na categoria
 export const  getProductsFromCategory = async (categoryId) => {
@@ -16,7 +15,7 @@ export const  getProductsFromCategory = async (categoryId) => {
 export const getProdutosID = async (id) => {
   try {
     const response = await axios.get(
-      `https://api.mercadolibre.com/items/${id}}`
+      `https://api.mercadolibre.com/items/${id}`
     );
     return response;
   } catch (err) {

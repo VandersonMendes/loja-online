@@ -49,6 +49,10 @@
     padding: 0.5rem 1rem;
     
 }
+.flexCategories span:hover{
+    transition: 400ms ease;
+    background-color:  rgba(249,143,36,1);
+}
 .verMais{
     display: flex;
     justify-content: center;

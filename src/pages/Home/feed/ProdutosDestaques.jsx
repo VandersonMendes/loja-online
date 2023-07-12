@@ -18,8 +18,11 @@ const ProdutosDestaques = () => {
     categoryId,
     setCategoryId,
     category,
-    setCategory
+    setCategory,
+    setCarrinho
   } = useAppProvider();
+  // const length = JSON.parse(window.localStorage.getItem('listCarrinho'));
+  // console.log(length)
   // useNavigate é usado para redimensionar para outra pagina
   const navigate = useNavigate();
   const [produtos, setProdutos] = useState(null);
@@ -41,7 +44,7 @@ const ProdutosDestaques = () => {
   const getCategory = async () => {
     setLoading(true);
     const data = await getCategories();
-    setCategory(data.slice(0, 8));
+    setCategory(data.data.slice(0, 8))
     setLoading(false);
   };
 
@@ -61,6 +64,7 @@ const ProdutosDestaques = () => {
         alignitens="center"
         justifycontent="center"
         wrap="wrap"
+        className={styles.flexCategories}
       >
         {/* Destruturando a array category */}
         {category &&
@@ -78,7 +82,7 @@ const ProdutosDestaques = () => {
             </StyledSpan>
           ))}
       </StyledFlex>
-      {/* Destruturando arrays dos produtos */}
+
       {loading ? (
         <div>
           <span className={styles.loadingProducts}></span>
@@ -107,6 +111,7 @@ const ProdutosDestaques = () => {
                     className={styles.addCarrinho}
                     onClick={() => {
                       setCarrinhoID(result.id);
+                      setCarrinho(true)
                     }}
                   >
                     Adicionar no carrinho
@@ -116,7 +121,7 @@ const ProdutosDestaques = () => {
             ))}
         </ul>
       )}
-      {/* caso tenha algum produto, o buttom de ver mais aparece */}
+
       {categoryId && (
         <div className={styles.verMais}>
           <StyledButton
@@ -135,7 +140,7 @@ const ProdutosDestaques = () => {
           </StyledButton>
         </div>
       )}
-      {/* Caso não tenha nenhum produto, Aparece um texto [Nenhum produto selecionado]  */}
+
       {categoryId ? (
         <span></span>
       ) : (

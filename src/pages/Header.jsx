@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate()
   const [valueSearch, setValueSearch] = useState(null);
-  const {setSearch,search} = useAppProvider();
+  const {setSearch,search, productList, carrinho} = useAppProvider();
   const HandleInput = ({target}) =>{
     setValueSearch(target.value)
   }
@@ -87,7 +87,7 @@ const Header = () => {
             src={IconCarrinho}
             alt="Icone carrinho"
           />
-          <span className={styles.amout}>2</span>
+          <span className={styles.amout} >{carrinho ? (productList.length + 1):( 0) }</span>
         </Link>
       </StyledFlex>
     </header>
