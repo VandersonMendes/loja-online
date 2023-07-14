@@ -9,24 +9,10 @@ const Carrinho = () => {
   const navigate = useNavigate()
   const carrinhoList = JSON.parse(localStorage.getItem("listIdCarrinho"));
   const resultado = (localStorage.getItem("resultProducts"));
-  console.log(resultado)
+  // console.log(resultado)
   const [finalPrice, updateFinalPrice] = useState([])
   const [result, updateResult] = useState(0);
   const [add, setAdd] = useState(0)
-  useEffect(() => {
-    carrinhoList && carrinhoList.map((res) => {
-      const itemPrice = window.localStorage.getItem(res.id);
-      const validation = itemPrice === null ? res.price : itemPrice;
-      if (res.price && !finalPrice.includes(itemPrice)) {
-        const listPrice = finalPrice;
-        finalPrice && listPrice.push(validation)
-        const res = listPrice.reduce((a, b) => a + parseInt(b), 0)
-        console.log(result)
-        updateResult(res);
-        window.localStorage.setItem('resultProducts', res)
-      }
-    })
-  }, [carrinhoList])
 
   const handleClickAdd = (data) => {
     const itemPrice = window.localStorage.getItem(data.id)
@@ -56,6 +42,24 @@ const Carrinho = () => {
       }
    window.localStorage.setItem(data.id, Number(qnt));
   }
+
+  useEffect(() => {
+    carrinhoList && carrinhoList.map((res) => {
+      const itemPrice = window.localStorage.getItem(res.id);
+      const validation = itemPrice === null ? res.price : itemPrice;
+      if (itemPrice && !finalPrice.includes(itemPrice)) {
+        const listPrice = finalPrice;
+        finalPrice && listPrice.push(validation)
+        console.log(listPrice)
+        const res = listPrice.slice(0, carrinhoList.length).reduce((a, b) => a + parseInt(b), 0)
+        updateResult(res);
+        window.localStorage.setItem('resultProducts', res)
+       
+      }
+    })
+  }, [carrinhoList])
+
+
   return (
     <section className={`${'container'} ${styles.carrinho}`}>
       {carrinhoList && 
@@ -64,7 +68,7 @@ const Carrinho = () => {
         <StyledSpan fontSize="1.4rem" weight="900">Resumo da compra</StyledSpan>
         <StyledFlex justifycontent="space-between">
           <StyledSpan fontSize="1.4rem">Sub total</StyledSpan>
-          <StyledSpan  fontSize="1.4rem">R$ {result}</StyledSpan>
+          <StyledSpan  fontSize="1.4rem">R$ {resultado}</StyledSpan>
         </StyledFlex>
 
         <StyledFlex justifycontent="space-between">
