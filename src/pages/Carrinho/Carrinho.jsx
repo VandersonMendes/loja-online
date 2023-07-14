@@ -36,6 +36,7 @@ const Carrinho = () => {
         Number(data.price) + Number(data.price)
 
     window.localStorage.setItem(data.id, Number(qnt));
+    window.location.reload()
 
   }
   const handleClickRemove = (data) => {
@@ -47,6 +48,7 @@ const Carrinho = () => {
     setPrice(value)
     console.log(value)
     window.localStorage.setItem(data.id, Number(value));
+    window.location.reload()
   }
 
   return (
