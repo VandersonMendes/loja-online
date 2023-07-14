@@ -10,9 +10,9 @@ const Carrinho = () => {
   const carrinhoList = JSON.parse(localStorage.getItem("listIdCarrinho"));
   const [finalPrice, updateFinalPrice] = useState([])
   const [result, updateResult] = useState(0);
-  const [cartList, setCartList] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [add, setAdd] = useState(0)
   useEffect(() => {
-    setCartList(1);
     carrinhoList && carrinhoList.map((res) => {
       const itemPrice = window.localStorage.getItem(res.id);
       const validation = itemPrice === null ? res.price : itemPrice;
@@ -25,9 +25,9 @@ const Carrinho = () => {
       }
     })
   }, [carrinhoList])
+
   const handleClickAdd = (data) => {
     const itemPrice = window.localStorage.getItem(data.id)
-
     const qnt =
       Number(itemPrice)
         ?
@@ -35,9 +35,8 @@ const Carrinho = () => {
         :
         Number(data.price) + Number(data.price)
 
-    window.localStorage.setItem(data.id, Number(qnt))
+    window.localStorage.setItem(data.id, Number(qnt));
 
-    window.location.reload()
   }
   const handleClickRemove = (data) => {
     const itemPrice = window.localStorage.getItem(data.id)
@@ -45,12 +44,11 @@ const Carrinho = () => {
     if(value < data.price){
       return;
     }
-    window.localStorage.setItem(data.id, Number(value))
-
-    window.location.reload();
+    setPrice(value)
+    console.log(value)
+    window.localStorage.setItem(data.id, Number(value));
   }
 
-  console.log(window.localStorage.getItem('totCarrinho'))
   return (
     <section className={`${'container'} ${styles.carrinho}`}>
       {carrinhoList && 
@@ -136,6 +134,7 @@ const Carrinho = () => {
                       BorderColor="#38383899"
                       onClick={() => {
                         handleClickAdd(item);
+                        setAdd(add +1)
                       }}
                     >
                       +1
