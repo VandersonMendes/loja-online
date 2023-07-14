@@ -8,20 +8,22 @@ import { useEffect, useState } from "react";
 const Carrinho = () => {
   const navigate = useNavigate()
   const carrinhoList = JSON.parse(localStorage.getItem("listIdCarrinho"));
+  const resultado = (localStorage.getItem("resultProducts"));
+  console.log(resultado)
   const [finalPrice, updateFinalPrice] = useState([])
   const [result, updateResult] = useState(0);
-  const [price, setPrice] = useState(0);
   const [add, setAdd] = useState(0)
   useEffect(() => {
     carrinhoList && carrinhoList.map((res) => {
       const itemPrice = window.localStorage.getItem(res.id);
       const validation = itemPrice === null ? res.price : itemPrice;
-      if (itemPrice && !finalPrice.includes(itemPrice)) {
+      if (res.price && !finalPrice.includes(itemPrice)) {
         const listPrice = finalPrice;
         finalPrice && listPrice.push(validation)
-        const result = listPrice.reduce((a, b) => a + parseInt(b), 0)
-        updateResult(result)
-
+        const res = listPrice.reduce((a, b) => a + parseInt(b), 0)
+        console.log(result)
+        updateResult(res);
+        window.localStorage.setItem('resultProducts', res)
       }
     })
   }, [carrinhoList])
@@ -34,23 +36,26 @@ const Carrinho = () => {
         Number(itemPrice) + Number(data.price)
         :
         Number(data.price) + Number(data.price)
-
-    window.localStorage.setItem(data.id, Number(qnt));
-    window.location.reload()
-
+        console.log(qnt)
+        window.localStorage.setItem(data.id, qnt)
   }
+
+
   const handleClickRemove = (data) => {
-    const itemPrice = window.localStorage.getItem(data.id)
-    const value = Number(itemPrice) - Number(data.price);
-    if(value < data.price){
-      return;
-    }
-    setPrice(value)
-    console.log(value)
-    window.localStorage.setItem(data.id, Number(value));
-    window.location.reload()
-  }
+    const itemPrice = window.localStorage.getItem(data.id);
 
+    const qnt =
+    Number(itemPrice)
+      ?
+      Number(itemPrice) - Number(data.price)
+      :
+      Number(data.price) - Number(data.price)
+      
+      if(qnt < data.price){
+        return
+      }
+   window.localStorage.setItem(data.id, Number(qnt));
+  }
   return (
     <section className={`${'container'} ${styles.carrinho}`}>
       {carrinhoList && 
