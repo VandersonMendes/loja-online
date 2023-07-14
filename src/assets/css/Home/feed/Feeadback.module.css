@@ -8,8 +8,8 @@
     position: relative;
     padding-bottom: 4rem;
 }
-.feeadback h2{
-    padding: 2rem 0;
+.containerFeeadback h2{
+    padding: 2rem 1rem;
 }
 .text p, h4{
     padding: 1rem;

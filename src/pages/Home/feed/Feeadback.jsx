@@ -40,6 +40,7 @@ const Feeadback = () => {
               </div>
               <div>
                 <StyledImg
+                  objectFit="cover"
                   width="350px"
                   height="450px"
                   src={feeadback1}
@@ -62,7 +63,7 @@ const Feeadback = () => {
                   delectus nobis, maiores vero quam officia doloribus. Dicta
                   modi nam quod facilis magnam.
                 </StyledParagrafo>
-                <StyledH4>Maria José</StyledH4>
+                <StyledH4>Reginaldo Costa</StyledH4>
               </div>
               <div>
                 <StyledImg
@@ -88,7 +89,7 @@ const Feeadback = () => {
                   delectus nobis, maiores vero quam officia doloribus. Dicta
                   modi nam quod facilis magnam.
                 </StyledParagrafo>
-                <StyledH4>Maria José</StyledH4>
+                <StyledH4>Joselino Silva</StyledH4>
               </div>
               <div>
                 <StyledImg
@@ -114,7 +115,7 @@ const Feeadback = () => {
                   delectus nobis, maiores vero quam officia doloribus. Dicta
                   modi nam quod facilis magnam.
                 </StyledParagrafo>
-                <StyledH4>Maria José</StyledH4>
+                <StyledH4>Candida de Assis</StyledH4>
               </div>
               <div>
                 <StyledImg

@@ -8,52 +8,49 @@ import { StyledImg } from "../componentes/Img.style";
 import { StyledInput } from "../componentes/Input.style";
 import IconCarrinho from "../assets/img/carrinhoDeCompra.svg";
 import { StyledButton } from "../componentes/Buttom.style";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppProvider } from "../context/Context";
 import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate()
   const [valueSearch, setValueSearch] = useState(null);
-  const {setSearch,search, productListId, carrinho} = useAppProvider();
-  const HandleInput = ({target}) =>{
+  const { setSearch, search} = useAppProvider();
+  const HandleInput = ({ target }) => {
     setValueSearch(target.value)
   }
   const handleSubmit = (e) => {
     e.preventDefault()
     setSearch(valueSearch)
     console.log(search)
-    // caso tenha algun valor dentro de input de busca, vai navegar para pagina de produtos e puxar os produto que estão dentro do input
-    if(valueSearch){
+    if (valueSearch) {
       navigate('/products')
     }
   }
+  const carrinhoList = JSON.parse(localStorage.getItem('listIdCarrinho'))
+
   return (
     <header>
       <div className={styles.header}>
         <StyledFlex
           className="container"
-          justifycontent="space-around"
           alignitens="center"
-          wrap="wrap"
-        >
-          <StyledH3 color="white" weight="400" fontSize="2.25rem">
-            <a href="/" style={{ color: "white" }}>
-              LOGO
-            </a>
-          </StyledH3>
+          justifycontent="space-around">
+          <div><a href="/">
+            <StyledH3 color="#fff">Loja Online</StyledH3>
+          </a></div>
+          <div>
+            <StyledFlex gap="0.5rem">
+              <StyledImg src={localizacao} alt="localização"/>
+              <StyledSpan fontSize='1.1rem' color="#fff"> localização</StyledSpan>
 
-          <StyledFlex alignitens="center" gap="0.5rem">
-            <StyledImg width="20px" src={localizacao} alt="encontrar" />
-            <StyledSpan color="#ffff" fontSize="1.25rem">Encontre uma distibuidora.</StyledSpan>
-          </StyledFlex>
+            </StyledFlex>
+          </div>
         </StyledFlex>
       </div>
 
       <StyledFlex
+        justifycontent="space-around"
         className={`${'container'} ${styles.flex}`}
-        // justifycontent="space-around"
-        // alignitens="center"
-        // gap="3rem"
       >
         <form onSubmit={handleSubmit}>
           <StyledFlex gap="0.5rem">
@@ -84,7 +81,7 @@ const Header = () => {
             src={IconCarrinho}
             alt="Icone carrinho"
           />
-          <span className={styles.amout} >{carrinho ? (productListId.length + 1):( 0) }</span>
+          <span className={styles.amout} >{carrinhoList ?carrinhoList.length : 0 }</span>
         </Link>
       </StyledFlex>
     </header>

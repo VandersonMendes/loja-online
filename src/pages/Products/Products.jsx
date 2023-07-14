@@ -11,11 +11,11 @@ import { StyledFlex } from "../../componentes/Flex.style";
 import { StyledH3, StyledH4 } from "../../componentes/Font.style";
 import { StyledImg } from "../../componentes/Img.style";
 const Products = () => {
-  const { loading, setLoading, categoryId, setCategoryId, search, setSearch, setCarrinhoID, carrinhoID } =
+  const { loading, setLoading, search, categoryId, setCategoryId, setSearch, setCarrinhoID} =
     useAppProvider();
   const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState(null);
-  const [menuMobile, setMenuMobile] = useState(true);
+  const [menuMobile, setMenuMobile] = useState(true)
   // to pull the products when to pick up
   useEffect(() => {
     setCategoryId(null);
@@ -146,7 +146,7 @@ const Products = () => {
                             BorderColor="#ffff"
                             backgroudColor=" #CF5D00"
                             color="#ffff"
-                            onClick={() => setCarrinhoID(product.id)}
+                            onClick={() => setCarrinhoID(product)}
                           >
                             Adicionar no Carrinho
                           </StyledButton>
@@ -169,49 +169,3 @@ const Products = () => {
 };
 
 export default Products;
-{/* <div>
-{products && products.length ? (
-          <div className={`${styles.gridProduct} ${"animeLeft"}`}>
-            {products &&
- products.map((product) => (
-   <StyledFlex
-     className={styles.card}
-     flexDirection="column"
-     alignitens="center"
-     justifycontent="center"
-   >
-     <div className={styles.img}>
-       <StyledImg
-         src={product.thumbnail.replace(/\w\.jpg/gi, "W.jpg")}
-         maxWidth="17rem"
-       />
-     </div>
-     <div className={styles.text}>
-       <StyledH4 fontSize="1.3rem" className={styles.title}>
-         {product.title}
-       </StyledH4>
-       <StyledH4
-         fontSize="1.5rem"
-         weight="700"
-         color="#000000ec"
-         className={styles.price}
-       >
-         R$ {product.price}
-       </StyledH4>
-       <StyledButton
-         fontSize="1.4rem"
-         BorderColor="#ffff"
-         backgroudColor=" #CF5D00"
-         color="#ffff"
-         onClick={() => setCarrinhoID(product.id)}
-       >
-         Adicionar no Carrinho
-       </StyledButton>
-     </div>
-   </StyledFlex>
- ))}
-          </div>
-        ) : (
-          <div className={`${styles.NotProducts} ${"container"}`}>
-            <StyledH3>Não existe produtos</StyledH3>
-          </div> */}

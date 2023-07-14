@@ -19,14 +19,11 @@ const ProdutosDestaques = () => {
     setCategoryId,
     category,
     setCategory,
-    setCarrinho
   } = useAppProvider();
-  // const length = JSON.parse(window.localStorage.getItem('listCarrinho'));
-  // console.log(length)
-  // useNavigate é usado para redimensionar para outra pagina
   const navigate = useNavigate();
   const [produtos, setProdutos] = useState(null);
-  // Esse efect outro responsavel de puxar os produtos mediante as categorias
+
+
   useEffect(() => {
     getProdutoCategory();
   }, [categoryId]);
@@ -37,7 +34,7 @@ const ProdutosDestaques = () => {
     setLoading(false);
   };
   
-  // Esse efeito será será responsável de puxar as categorias, quando abri o site
+
   useEffect(() => {
     getCategory();
   }, []);
@@ -66,10 +63,11 @@ const ProdutosDestaques = () => {
         wrap="wrap"
         className={styles.flexCategories}
       >
-        {/* Destruturando a array category */}
+
         {category &&
-          category.map((cat) => (
+          category.map((cat, index) => (
             <StyledSpan
+            tabIndex={index}
               key={cat.id}
               onClick={() => setCategoryId(cat.id)}
               backgroundColor="#F9CA24"
@@ -84,14 +82,14 @@ const ProdutosDestaques = () => {
       </StyledFlex>
 
       {loading ? (
-        <div>
+        <div className={styles.containerLoading}>
           <span className={styles.loadingProducts}></span>
         </div>
       ) : (
         <ul className={`${styles.destaquesGrid} ${"animeTop"}`}>
           {produtos &&
-            produtos.map((result) => (
-              <li key={result.id}>
+            produtos.map((result, index) => (
+              <li key={result.id} tabIndex={index}>
                 <div className={styles.img}>
                   <img
                     src={result.thumbnail.replace(/\w\.jpg/gi, "W.jpg")}
@@ -110,8 +108,7 @@ const ProdutosDestaques = () => {
                     fontSize="1.2rem"
                     className={styles.addCarrinho}
                     onClick={() => {
-                      setCarrinhoID(result.id);
-                      setCarrinho(true)
+                      setCarrinhoID(result);
                     }}
                   >
                     Adicionar no carrinho

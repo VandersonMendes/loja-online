@@ -4,32 +4,29 @@ import { useEffect } from "react";
 export function AppProvider({ children }) {
   const [loading, setLoading] = useState(null);
   const [desejos, setDesejos] = useState(null);
-  const [carrinho, setCarrinho] = useState(null);
   const [carrinhoID, setCarrinhoID] = useState();
   const [categoryId, setCategoryId] = useState(null);
   const [category, setCategory] = useState(null);
   const [search, setSearch] = useState(null);
   const [productListId, setProductListId] = useState([]);
+  const [lengthProductsCarrinho, setLengthProductsCarrinho] = useState(null)
+
   useEffect(() => {
-    const carrinhoSalvo = localStorage.getItem('listId')
-    if(carrinhoSalvo){
-      setResult(JSON.parse(carrinhoSalvo))
-      
+    if (carrinhoID && !productListId.includes(carrinhoID)) {
+      const updateList = productListId;
+      updateList && updateList.push(carrinhoID);
+      window.localStorage.setItem("listIdCarrinho", JSON.stringify(updateList));
+      updateList &&
+        updateList.map((res) => {
+          window.localStorage.setItem(res.id, Number(res.price));
+        });
     }
-  }, []);
-
-  useEffect(() => {
-    carrinho && productListId.push(carrinhoID);
-    localStorage.setItem('listId', JSON.stringify(productListId));
   }, [carrinhoID]);
-
   return (
     <AppContext.Provider
       value={{
         loading,
         setLoading,
-        carrinho,
-        setCarrinho,
         desejos,
         setDesejos,
         setCarrinhoID,
@@ -40,8 +37,6 @@ export function AppProvider({ children }) {
         setCategory,
         search,
         setSearch,
-        productListId,
-        setProductListId,
       }}
     >
       {children}

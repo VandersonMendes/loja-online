@@ -1,18 +1,14 @@
 .header{
     background: rgb(249,143,36);
     background: linear-gradient(90deg, rgba(249,143,36,1) 40%, rgba(207,93,0,1) 100%);
-    padding: 0.4rem 0;
+    padding: 1rem 0;
 }
 .flex{
-    position: fixed;
-    top: 2rem;
-    left: 0;
-    right: 0;
-    z-index: 10000;
-    display: flex;
-    justify-content: space-around;
     padding:2rem 0;
+    backdrop-filter: blur(4px);
+
 }
+
 .amout{
     position: relative;
     background-color: #F9CA24;
