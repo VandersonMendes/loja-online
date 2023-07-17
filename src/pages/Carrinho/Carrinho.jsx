@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 const Carrinho = () => {
   const navigate = useNavigate()
   const carrinhoList = JSON.parse(localStorage.getItem("listIdCarrinho"));
-  const resultado = (localStorage.getItem("resultProducts"));
+  // const resultado = (localStorage.getItem("resultProducts"));
   // console.log(resultado)
   const [finalPrice, updateFinalPrice] = useState([])
   const [result, updateResult] = useState(0);
@@ -22,8 +22,8 @@ const Carrinho = () => {
         Number(itemPrice) + Number(data.price)
         :
         Number(data.price) + Number(data.price)
-        console.log(qnt)
         window.localStorage.setItem(data.id, qnt)
+        window.location.reload()
   }
 
 
@@ -47,13 +47,13 @@ const Carrinho = () => {
     carrinhoList && carrinhoList.map((res) => {
       const itemPrice = window.localStorage.getItem(res.id);
       const validation = itemPrice === null ? res.price : itemPrice;
-      if (itemPrice && !finalPrice.includes(itemPrice)) {
+      if (validation && !finalPrice.includes(validation)) {
         const listPrice = finalPrice;
-        finalPrice && listPrice.push(validation)
-        console.log(listPrice)
-        const res = listPrice.slice(0, carrinhoList.length).reduce((a, b) => a + parseInt(b), 0)
+        listPrice && listPrice.push(validation);
+        console.log(finalPrice);
+        const res = listPrice.reduce((a, b) => a + parseInt(b), 0)
+        console.log(res)
         updateResult(res);
-        window.localStorage.setItem('resultProducts', res)
        
       }
     })
@@ -68,7 +68,7 @@ const Carrinho = () => {
         <StyledSpan fontSize="1.4rem" weight="900">Resumo da compra</StyledSpan>
         <StyledFlex justifycontent="space-between">
           <StyledSpan fontSize="1.4rem">Sub total</StyledSpan>
-          <StyledSpan  fontSize="1.4rem">R$ {resultado}</StyledSpan>
+          <StyledSpan  fontSize="1.4rem">R$ {result}</StyledSpan>
         </StyledFlex>
 
         <StyledFlex justifycontent="space-between">
