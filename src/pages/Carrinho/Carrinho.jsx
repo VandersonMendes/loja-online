@@ -24,6 +24,7 @@ const Carrinho = () => {
         Number(data.price) + Number(data.price)
         window.localStorage.setItem(data.id, qnt)
         window.location.reload()
+        navigate('/carrinho')
   }
 
 
@@ -41,7 +42,9 @@ const Carrinho = () => {
         return
       }
    window.localStorage.setItem(data.id, Number(qnt));
-  }
+   window.reload();
+   navigate('/carrinho');
+    }
 
   useEffect(() => {
     carrinhoList && carrinhoList.map((res) => {
