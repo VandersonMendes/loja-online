@@ -22,27 +22,20 @@ const Carrinho = () => {
         Number(itemPrice) + Number(data.price)
         :
         Number(data.price) + Number(data.price)
-        window.localStorage.setItem(data.id, qnt)
-      window.location.reload()
+    window.localStorage.setItem(data.id, qnt)
+    window.location.reload()
   }
 
 
   const handleClickRemove = (data) => {
     const itemPrice = window.localStorage.getItem(data.id);
-
-    const qnt =
-    Number(itemPrice)
-      ?
-      Number(itemPrice) - Number(data.price)
-      :
-      Number(data.price) - Number(data.price)
-      
-      if(qnt < data.price){
-        return
-      }
-   window.localStorage.setItem(data.id, Number(qnt));
-   window.reload();
+    const value =itemPrice &&  Number(itemPrice) - Number(data.price);
+    if (value <= data.price) {
+      return;
     }
+    window.localStorage.setItem(data.id, value);
+    window.location.reload();
+  }
 
   useEffect(() => {
     carrinhoList && carrinhoList.map((res) => {
@@ -55,7 +48,6 @@ const Carrinho = () => {
         const res = listPrice.reduce((a, b) => a + parseInt(b), 0)
         console.log(res)
         updateResult(res);
-       
       }
     })
   }, [carrinhoList])
@@ -63,41 +55,41 @@ const Carrinho = () => {
 
   return (
     <section className={`${'container'} ${styles.carrinho}`}>
-      {carrinhoList && 
-      <div className={styles.resultContainer}>
-      <StyledFlex flexDirection="column">
-        <StyledSpan fontSize="1.4rem" weight="900">Resumo da compra</StyledSpan>
-        <StyledFlex justifycontent="space-between">
-          <StyledSpan fontSize="1.4rem">Sub total</StyledSpan>
-          <StyledSpan  fontSize="1.4rem">R$ {result}</StyledSpan>
-        </StyledFlex>
+      {carrinhoList &&
+        <div className={styles.resultContainer}>
+          <StyledFlex flexDirection="column">
+            <StyledSpan fontSize="1.4rem" weight="900">Resumo da compra</StyledSpan>
+            <StyledFlex justifycontent="space-between">
+              <StyledSpan fontSize="1.4rem">Sub total</StyledSpan>
+              <StyledSpan fontSize="1.4rem">R$ {result}</StyledSpan>
+            </StyledFlex>
 
-        <StyledFlex justifycontent="space-between">
-          <StyledSpan  fontSize="1.4rem">Frete</StyledSpan>
-          <StyledSpan color="rgb(17, 168, 0)"  fontSize="1.4rem">gratuito</StyledSpan>
-        </StyledFlex>
-      </StyledFlex>
+            <StyledFlex justifycontent="space-between">
+              <StyledSpan fontSize="1.4rem">Frete</StyledSpan>
+              <StyledSpan color="rgb(17, 168, 0)" fontSize="1.4rem">gratuito</StyledSpan>
+            </StyledFlex>
+          </StyledFlex>
 
-      <StyledFlex justifycontent="flex-start" className={styles.tot}>
-        <StyledH3>Total: </StyledH3>
-      </StyledFlex>
-      <StyledFlex className={styles.finalizeCompra} justifycontent="center">
-        <StyledButton
-          color="#fff"
-          backgroudColor="rgb(17, 168, 0)"
-          BorderColor="#383838"
-          padding="0.5rem 1rem"
-          fontSize="1.5rem"
-          onClick={() =>{
-            window.localStorage.clear()
-            navigate('/')
-          }}
-        >
-          Finalizar comprar
-        </StyledButton>
-      </StyledFlex>
-    </div>}
-    <div className={styles.gridCarrinho}>
+          <StyledFlex justifycontent="center" className={styles.tot}>
+            <StyledH3>Total: R$ {result}</StyledH3>
+          </StyledFlex>
+          <StyledFlex className={styles.finalizeCompra} justifycontent="center">
+            <StyledButton
+              color="#fff"
+              backgroudColor="rgb(17, 168, 0)"
+              BorderColor="#383838"
+              padding="0.5rem 1rem"
+              fontSize="1.5rem"
+              onClick={() => {
+                window.localStorage.clear()
+                navigate('/')
+              }}
+            >
+              Finalizar comprar
+            </StyledButton>
+          </StyledFlex>
+        </div>}
+      <div className={styles.gridCarrinho}>
         <div>
           <StyledSpan>Produto</StyledSpan>
         </div>
@@ -105,7 +97,7 @@ const Carrinho = () => {
           <StyledSpan className={styles.preco}>Preço</StyledSpan>
         </div>
       </div>
-    
+
       {carrinhoList ? (
         carrinhoList.map((item) => {
           const itemPrice = window.localStorage.getItem(item.id);
@@ -132,8 +124,8 @@ const Carrinho = () => {
                       fontSize="1.3rem"
                       padding="0.5rem 0.8rem"
                       BorderColor="#38383899"
-                      onClick={() => {
-                        handleClickRemove(item);
+                      onClick={() =>{
+                        handleClickRemove(item)
                       }}
                     >
                       -1
@@ -146,7 +138,7 @@ const Carrinho = () => {
                       BorderColor="#38383899"
                       onClick={() => {
                         handleClickAdd(item);
-                        setAdd(add +1)
+
                       }}
                     >
                       +1

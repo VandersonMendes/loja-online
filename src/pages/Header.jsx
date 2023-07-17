@@ -8,13 +8,14 @@ import { StyledImg } from "../componentes/Img.style";
 import { StyledInput } from "../componentes/Input.style";
 import IconCarrinho from "../assets/img/carrinhoDeCompra.svg";
 import { StyledButton } from "../componentes/Buttom.style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppProvider } from "../context/Context";
 import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate()
   const [valueSearch, setValueSearch] = useState(null);
-  const { setSearch, search} = useAppProvider();
+  const { setSearch, search,lengthProductsCarrinho} = useAppProvider();
+  const [carrinhoLength, setCarrinhoLength] = useState(0)
   const HandleInput = ({ target }) => {
     setValueSearch(target.value)
   }
@@ -26,8 +27,7 @@ const Header = () => {
       navigate('/products')
     }
   }
-  const carrinhoList = JSON.parse(localStorage.getItem('listIdCarrinho'))
-
+  const productsCarrinho = JSON.parse(localStorage.getItem('listIdCarrinho'))
   return (
     <header>
       <div className={styles.header}>
@@ -81,7 +81,7 @@ const Header = () => {
             src={IconCarrinho}
             alt="Icone carrinho"
           />
-          <span className={styles.amout} >{carrinhoList ?carrinhoList.length : 0 }</span>
+          <span className={styles.amout} >{productsCarrinho ? productsCarrinho.length : 0 }</span>
         </Link>
       </StyledFlex>
     </header>

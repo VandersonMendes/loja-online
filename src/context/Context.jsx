@@ -21,6 +21,7 @@ export function AppProvider({ children }) {
           window.localStorage.setItem(res.id, Number(res.price));
         });
     }
+    
   }, [carrinhoID]);
   return (
     <AppContext.Provider
@@ -37,6 +38,7 @@ export function AppProvider({ children }) {
         setCategory,
         search,
         setSearch,
+        lengthProductsCarrinho,
       }}
     >
       {children}
