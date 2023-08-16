@@ -5,15 +5,13 @@
 .text {
     position: absolute;
     right: 1%;
-    top: 20%;
+    top: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.preco {
-    margin-top: 1rem;
-}
+
 
 .preco button {
     background: rgb(249, 143, 36);
@@ -36,14 +34,14 @@
     }
 
     .text {
-        top: 15%;
+        top: 25%;
     }
 
 }
 
 @media (max-width:400px) {
     .text {
-        top: 8%;
+        top: 17%;
     }
 
     .preco button {

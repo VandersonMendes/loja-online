@@ -8,12 +8,11 @@ import { useEffect, useState } from "react";
 const Carrinho = () => {
   const navigate = useNavigate()
   const carrinhoList = JSON.parse(localStorage.getItem("listIdCarrinho"));
-  // const resultado = (localStorage.getItem("resultProducts"));
-  // console.log(resultado)
+  useEffect(() =>{
+      console.log('oi')
+  },[carrinhoList])
   const [finalPrice, updateFinalPrice] = useState([])
   const [result, updateResult] = useState(0);
-  const [add, setAdd] = useState(0)
-
   const handleClickAdd = (data) => {
     const itemPrice = window.localStorage.getItem(data.id)
     const qnt =
@@ -23,18 +22,17 @@ const Carrinho = () => {
         :
         Number(data.price) + Number(data.price)
     window.localStorage.setItem(data.id, qnt)
-    window.location.reload()
   }
 
 
   const handleClickRemove = (data) => {
     const itemPrice = window.localStorage.getItem(data.id);
-    const value =itemPrice &&  Number(itemPrice) - Number(data.price);
+    const value = itemPrice && Number(itemPrice) - Number(data.price);
     if (value <= data.price) {
       return;
     }
     window.localStorage.setItem(data.id, value);
-    window.location.reload();
+
   }
 
   useEffect(() => {
@@ -44,9 +42,8 @@ const Carrinho = () => {
       if (validation && !finalPrice.includes(validation)) {
         const listPrice = finalPrice;
         listPrice && listPrice.push(validation);
-        console.log(finalPrice);
+        console.log(listPrice)
         const res = listPrice.reduce((a, b) => a + parseInt(b), 0)
-        console.log(res)
         updateResult(res);
       }
     })
@@ -116,7 +113,7 @@ const Carrinho = () => {
                 </div>
                 <div>
                   <StyledH3 color="#383838">R${
-                    itemPrice ? itemPrice : item.price
+                    itemPrice ? Number(itemPrice).toFixed(2) : Number(item.price).toFixed(2)
                   }</StyledH3>
                   <StyledFlex gap="1rem" justifycontent="center">
                     <StyledButton
@@ -124,7 +121,7 @@ const Carrinho = () => {
                       fontSize="1.3rem"
                       padding="0.5rem 0.8rem"
                       BorderColor="#38383899"
-                      onClick={() =>{
+                      onClick={() => {
                         handleClickRemove(item)
                       }}
                     >
