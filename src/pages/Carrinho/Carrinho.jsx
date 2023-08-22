@@ -1,64 +1,37 @@
 import { StyledFlex } from "../../componentes/Flex.style";
 import { StyledImg } from "../../componentes/Img.style";
-import { StyledH2, StyledH3, StyledSpan } from "../../componentes/Font.style";
+import { StyledH2, StyledH3, StyledSpan, StyledParagrafo } from "../../componentes/Font.style";
 import { StyledButton } from "../../componentes/Buttom.style";
 import styles from "../../assets/css/Carrinho/Carrinho.module.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 const Carrinho = () => {
   const navigate = useNavigate()
-  const carrinhoList = JSON.parse(localStorage.getItem("listIdCarrinho"));
+  // const [listProducts, setListProducts] = useState([]);
+  const [listProducts, setProducts] = useState()
   useEffect(() =>{
-      console.log('oi')
-  },[carrinhoList])
-  const [finalPrice, updateFinalPrice] = useState([])
-  const [result, updateResult] = useState(0);
-  const handleClickAdd = (data) => {
-    const itemPrice = window.localStorage.getItem(data.id)
-    const qnt =
-      Number(itemPrice)
-        ?
-        Number(itemPrice) + Number(data.price)
-        :
-        Number(data.price) + Number(data.price)
-    window.localStorage.setItem(data.id, qnt)
-  }
-
-
-  const handleClickRemove = (data) => {
-    const itemPrice = window.localStorage.getItem(data.id);
-    const value = itemPrice && Number(itemPrice) - Number(data.price);
-    if (value <= data.price) {
-      return;
+    const upgrade = JSON.parse(window.localStorage.getItem('listProducts'));
+    setProducts(upgrade);
+    if (upgrade) {
+      const priceMap = [];
+      upgrade.forEach((item, i) => {
+        priceMap[i] = {index: i, price: item.price};
+      });
+      localStorage.setItem('priceMap', JSON.stringify(priceMap));
     }
-    window.localStorage.setItem(data.id, value);
-
-  }
-
-  useEffect(() => {
-    carrinhoList && carrinhoList.map((res) => {
-      const itemPrice = window.localStorage.getItem(res.id);
-      const validation = itemPrice === null ? res.price : itemPrice;
-      if (validation && !finalPrice.includes(validation)) {
-        const listPrice = finalPrice;
-        listPrice && listPrice.push(validation);
-        console.log(listPrice)
-        const res = listPrice.reduce((a, b) => a + parseInt(b), 0)
-        updateResult(res);
-      }
-    })
-  }, [carrinhoList])
-
-
+  },[])
+  // const handleClickAdd = (index) =>{
+  //   const price = JSON.parse(window.localStorage.getItem('priceMap'));
+  // }
   return (
     <section className={`${'container'} ${styles.carrinho}`}>
-      {carrinhoList &&
+      {listProducts &&
         <div className={styles.resultContainer}>
           <StyledFlex flexDirection="column">
             <StyledSpan fontSize="1.4rem" weight="900">Resumo da compra</StyledSpan>
             <StyledFlex justifycontent="space-between">
               <StyledSpan fontSize="1.4rem">Sub total</StyledSpan>
-              <StyledSpan fontSize="1.4rem">R$ {result}</StyledSpan>
+              <StyledSpan fontSize="1.4rem">R$ {}</StyledSpan>
             </StyledFlex>
 
             <StyledFlex justifycontent="space-between">
@@ -68,7 +41,7 @@ const Carrinho = () => {
           </StyledFlex>
 
           <StyledFlex justifycontent="center" className={styles.tot}>
-            <StyledH3>Total: R$ {result}</StyledH3>
+            <StyledH3>Total: R$ {}</StyledH3>
           </StyledFlex>
           <StyledFlex className={styles.finalizeCompra} justifycontent="center">
             <StyledButton
@@ -80,6 +53,7 @@ const Carrinho = () => {
               onClick={() => {
                 window.localStorage.clear()
                 navigate('/')
+                window.location.reload()
               }}
             >
               Finalizar comprar
@@ -95,25 +69,27 @@ const Carrinho = () => {
         </div>
       </div>
 
-      {carrinhoList ? (
-        carrinhoList.map((item) => {
+      {listProducts ? (
+        listProducts.map((item, index) => {
           const itemPrice = window.localStorage.getItem(item.id);
           return (
             <StyledFlex
               flexDirection="column"
-              gap="2rem"
+              key={item}
+              gap="1rem"
               className={styles.carrinho}
             >
               <div className={styles.gridCarrinho}>
-                <div>
+                <>
                   <StyledImg
                     maxWidth="140px"
                     src={item.thumbnail.replace(/\w\.jpg/gi, "W.jpg")}
                   ></StyledImg>
-                </div>
+                  <StyledParagrafo className={styles.titleProduct} fontSize="1.25rem">{item.title}</StyledParagrafo>
+                </>
                 <div>
                   <StyledH3 color="#383838">R${
-                    itemPrice ? Number(itemPrice).toFixed(2) : Number(item.price).toFixed(2)
+                    itemPrice ? itemPrice : item.price
                   }</StyledH3>
                   <StyledFlex gap="1rem" justifycontent="center">
                     <StyledButton
@@ -121,8 +97,8 @@ const Carrinho = () => {
                       fontSize="1.3rem"
                       padding="0.5rem 0.8rem"
                       BorderColor="#38383899"
-                      onClick={() => {
-                        handleClickRemove(item)
+                      onClick={() =>{
+                        // handleClickRemove(item)
                       }}
                     >
                       -1
@@ -134,7 +110,7 @@ const Carrinho = () => {
                       padding="0.5rem 0.8rem"
                       BorderColor="#38383899"
                       onClick={() => {
-                        handleClickAdd(item);
+                        handleClickAdd(item, index);
 
                       }}
                     >

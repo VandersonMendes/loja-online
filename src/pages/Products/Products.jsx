@@ -11,7 +11,7 @@ import { StyledFlex } from "../../componentes/Flex.style";
 import { StyledH3, StyledH4 } from "../../componentes/Font.style";
 import { StyledImg } from "../../componentes/Img.style";
 const Products = () => {
-  const { loading, setLoading, search, categoryId, setCategoryId, setSearch, setCarrinhoID} =
+  const { loading, setLoading, search, categoryId, setCategoryId, setSearch, setValueItemCarrinho} =
     useAppProvider();
   const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState(null);
@@ -48,7 +48,7 @@ const Products = () => {
     setCategories(data.data);
     setLoading(false);
   };
-  // console.log(categoryId)
+
   return (
     <section className="container">
       <div className={styles.toltProducts}>
@@ -72,14 +72,15 @@ const Products = () => {
               >
                 {categories &&
                   categories.map((category) => (
-                    <li className={styles.listCategories}>
+                    <li className={styles.listCategories}  key={category}>
                       <StyledButton
                         fontSize="1.3rem"
+                  
                         backgroudColor="#f7f7f7"
                         BorderColor="#f1f1f18d"
                         padding="0.2rem 1rem"
                         color="#383838"
-                        onClick={(e) => setCategoryId(category.id)}
+                        onClick={() => setCategoryId(category.id)}
                       >
                         {category.name}
                       </StyledButton>
@@ -119,6 +120,7 @@ const Products = () => {
                     products.map((product) => (
                       <StyledFlex
                         className={styles.card}
+                        key={product}
                         flexDirection="column"
                         alignitens="center"
                         justifycontent="center"
@@ -146,7 +148,9 @@ const Products = () => {
                             BorderColor="#ffff"
                             backgroudColor=" #CF5D00"
                             color="#ffff"
-                            onClick={() => setCarrinhoID(product)}
+                            onClick={() => {
+                              setValueItemCarrinho(product)
+                            }}
                           >
                             Adicionar no Carrinho
                           </StyledButton>

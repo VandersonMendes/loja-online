@@ -1,5 +1,5 @@
 import styles from "../../../assets/css/Home/feed/Destaques.module.css";
-import { getCategories, getProductsFromCategory } from "../../../servises/api";
+
 import { useEffect, useState } from "react";
 import { useAppProvider } from "../../../context/Context";
 import { useNavigate } from "react-router-dom";
@@ -10,17 +10,18 @@ import {
 } from "../../../componentes/Font.style";
 import { StyledButton } from "../../../componentes/Buttom.style";
 import { StyledFlex } from "../../../componentes/Flex.style";
+import {getCategories, getProductsFromCategory} from "../../../servises/api"
 const ProdutosDestaques = () => {
   const {
     loading,
     setLoading,
-    setCarrinhoID,
     categoryId,
     setCategoryId,
     category,
     setCategory,
   } = useAppProvider();
   const navigate = useNavigate();
+
   const [produtos, setProdutos] = useState(null);
 
 
@@ -44,6 +45,8 @@ const ProdutosDestaques = () => {
     setCategory(data.data.slice(0, 8))
     setLoading(false);
   };
+
+
 
   return (
     <div className={`${styles.destaques} ${"container"}`}>
@@ -108,7 +111,7 @@ const ProdutosDestaques = () => {
                     fontSize="1.2rem"
                     className={styles.addCarrinho}
                     onClick={() => {
-                      setCarrinhoID(result);
+      
                     }}
                   >
                     Adicionar no carrinho
@@ -130,7 +133,7 @@ const ProdutosDestaques = () => {
             style={{ textAlign: "center" }}
             onClick={() => {
               navigate("/products");
-              setCarrinhoID(categoryId);
+              setCategoryId(categoryId);
             }}
           >
             Ver mais

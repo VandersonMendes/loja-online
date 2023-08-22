@@ -1,49 +1,47 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+
 const AppContext = createContext();
-import { useEffect } from "react";
+
 export function AppProvider({ children }) {
   const [loading, setLoading] = useState(null);
   const [desejos, setDesejos] = useState(null);
-  const [carrinhoID, setCarrinhoID] = useState();
   const [categoryId, setCategoryId] = useState(null);
   const [category, setCategory] = useState(null);
   const [search, setSearch] = useState(null);
-  const [productListId, setProductListId] = useState([]);
-  const [lengthProductsCarrinho, setLengthProductsCarrinho] = useState(null)
+  const [valueItemCarrinho, setValueItemCarrinho] = useState();
+  const [listProducts, setProducts] = useState();
+  useEffect(() =>{
+    const upgrade = JSON.parse(window.localStorage.getItem('listProducts') || '[]');
+    setProducts(upgrade);
+  },[valueItemCarrinho])
+    useEffect(() =>{
+      if(listProducts && !listProducts.includes(valueItemCarrinho)){
+        const listUpgrade = [...listProducts, valueItemCarrinho]
+        window.localStorage.setItem('listProducts', JSON.stringify(listUpgrade));
+      }
+    },[valueItemCarrinho])
+  const contextValue = {
+    loading,
+    setLoading,
+    desejos,
+    setDesejos,
+    categoryId,
+    setCategoryId,
+    category,
+    setCategory,
+    search,
+    setSearch,
+    valueItemCarrinho, 
+    setValueItemCarrinho
+  };
 
-  useEffect(() => {
-    if (carrinhoID && !productListId.includes(carrinhoID)) {
-      const updateList = productListId;
-      updateList && updateList.push(carrinhoID);
-      window.localStorage.setItem("listIdCarrinho", JSON.stringify(updateList));
-      updateList &&
-        updateList.map((res) => {
-          window.localStorage.setItem(res.id, Number(res.price));
-        });
-    }
-  }, [carrinhoID]);
   return (
-    <AppContext.Provider
-      value={{
-        loading,
-        setLoading,
-        desejos,
-        setDesejos,
-        setCarrinhoID,
-        carrinhoID,
-        categoryId,
-        setCategoryId,
-        category,
-        setCategory,
-        search,
-        setSearch,
-        lengthProductsCarrinho,
-      }}
-    >
+    <AppContext.Provider value={contextValue}>
       {children}
     </AppContext.Provider>
   );
 }
+
 export function useAppProvider() {
   const context = useContext(AppContext);
   return context;
