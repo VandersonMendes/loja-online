@@ -8,13 +8,13 @@ import { StyledImg } from "../componentes/Img.style";
 import { StyledInput } from "../componentes/Input.style";
 import IconCarrinho from "../assets/img/carrinhoDeCompra.svg";
 import { StyledButton } from "../componentes/Buttom.style";
-import {useState } from "react";
+import {useState, useEffect } from "react";
 import { useAppProvider } from "../context/Context";
 import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate()
   const [valueSearch, setValueSearch] = useState(null);
-  const { setSearch, search} = useAppProvider();
+  const { setSearch, search, product, listProducts} = useAppProvider();
   const HandleInput = ({ target }) => {
     setValueSearch(target.value)
   }
@@ -27,15 +27,12 @@ const Header = () => {
     }
   }
   const [carrinhoList, setCarrinhoList] = useState(null)
-  // useEffect(() =>{
-  //   const carrinho = JSON.parse(localStorage.getItem("listIdCarrinho"));
-  //   setCarrinhoList(carrinho)
-  // },[])
 
-  // useEffect(() =>{
-  //   const carrinho = JSON.parse(localStorage.getItem("listIdCarrinho"));
-  //   setCarrinhoList(carrinho)
-  // },[carrinhoList])
+
+  useEffect(() =>{
+    const carrinho = JSON.parse(localStorage.getItem("listProducts"));
+    setCarrinhoList(carrinho)
+  },[product, listProducts])
 
   return (
     <header>

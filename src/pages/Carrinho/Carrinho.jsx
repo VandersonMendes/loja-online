@@ -1,77 +1,58 @@
 import { StyledFlex } from "../../componentes/Flex.style";
 import { StyledImg } from "../../componentes/Img.style";
-import { StyledH2, StyledH3, StyledSpan, StyledParagrafo } from "../../componentes/Font.style";
+import { StyledH2, StyledH3, StyledParagrafo } from "../../componentes/Font.style";
 import { StyledButton } from "../../componentes/Buttom.style";
 import styles from "../../assets/css/Carrinho/Carrinho.module.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useAppProvider } from "../../context/Context";
 const Carrinho = () => {
   const navigate = useNavigate()
-  // const [listProducts, setListProducts] = useState([]);
+  const {product} = useAppProvider()
   const [listProducts, setProducts] = useState()
-  useEffect(() =>{
+  const [itemPrice, setItemPrice] = useState(null)
+  useEffect(() => {
     const upgrade = JSON.parse(window.localStorage.getItem('listProducts'));
     setProducts(upgrade);
     if (upgrade) {
-      const priceMap = [];
-      upgrade.forEach((item, i) => {
-        priceMap[i] = {index: i, price: item.price};
+      upgrade.forEach((item) => {
+        localStorage.setItem(item.id, JSON.stringify(item.price));
       });
-      localStorage.setItem('priceMap', JSON.stringify(priceMap));
     }
-  },[])
-  // const handleClickAdd = (index) =>{
-  //   const price = JSON.parse(window.localStorage.getItem('priceMap'));
-  // }
+  }, [product, ])
+  const handleClickAdd = (data) => {
+    const price = window.localStorage.getItem(data.id)
+
+    const qnt =
+      Number(price)
+        ?
+        Number(price) + Number(data.price)
+        :
+        Number(data.price) + Number(data.price)
+
+    window.localStorage.setItem(data.id, Number(qnt))
+
+  }
+  const handleClickRemove = (data) => {
+    const price = window.localStorage.getItem(data.id)
+    const value = Number(price) - Number(data.price);
+    if(value < data.price){
+      return data.price;
+    }
+    window.localStorage.setItem(data.id, Number(value))
+  }
+
   return (
     <section className={`${'container'} ${styles.carrinho}`}>
-      {listProducts &&
-        <div className={styles.resultContainer}>
-          <StyledFlex flexDirection="column">
-            <StyledSpan fontSize="1.4rem" weight="900">Resumo da compra</StyledSpan>
-            <StyledFlex justifycontent="space-between">
-              <StyledSpan fontSize="1.4rem">Sub total</StyledSpan>
-              <StyledSpan fontSize="1.4rem">R$ {}</StyledSpan>
-            </StyledFlex>
-
-            <StyledFlex justifycontent="space-between">
-              <StyledSpan fontSize="1.4rem">Frete</StyledSpan>
-              <StyledSpan color="rgb(17, 168, 0)" fontSize="1.4rem">gratuito</StyledSpan>
-            </StyledFlex>
-          </StyledFlex>
-
-          <StyledFlex justifycontent="center" className={styles.tot}>
-            <StyledH3>Total: R$ {}</StyledH3>
-          </StyledFlex>
-          <StyledFlex className={styles.finalizeCompra} justifycontent="center">
-            <StyledButton
-              color="#fff"
-              backgroudColor="rgb(17, 168, 0)"
-              BorderColor="#383838"
-              padding="0.5rem 1rem"
-              fontSize="1.5rem"
-              onClick={() => {
-                window.localStorage.clear()
-                navigate('/')
-                window.location.reload()
-              }}
-            >
-              Finalizar comprar
-            </StyledButton>
-          </StyledFlex>
-        </div>}
-      <div className={styles.gridCarrinho}>
-        <div>
-          <StyledSpan>Produto</StyledSpan>
-        </div>
-        <div>
-          <StyledSpan className={styles.preco}>Preço</StyledSpan>
-        </div>
+      <div >
+        <ul className={styles.gridCarrinho}>
+          <li>Descrição</li>
+          <li>Quantidade</li>
+          <li>SubTotal</li>
+        </ul>
       </div>
-
       {listProducts ? (
-        listProducts.map((item, index) => {
-          const itemPrice = window.localStorage.getItem(item.id);
+        listProducts.map((item) => {
           return (
             <StyledFlex
               flexDirection="column"
@@ -80,25 +61,24 @@ const Carrinho = () => {
               className={styles.carrinho}
             >
               <div className={styles.gridCarrinho}>
-                <>
+                <StyledFlex
+                  alignitens="center" gap='10px'>
                   <StyledImg
                     maxWidth="140px"
                     src={item.thumbnail.replace(/\w\.jpg/gi, "W.jpg")}
                   ></StyledImg>
                   <StyledParagrafo className={styles.titleProduct} fontSize="1.25rem">{item.title}</StyledParagrafo>
-                </>
+                </StyledFlex
+                >
                 <div>
-                  <StyledH3 color="#383838">R${
-                    itemPrice ? itemPrice : item.price
-                  }</StyledH3>
                   <StyledFlex gap="1rem" justifycontent="center">
                     <StyledButton
                       backgroudColor="#ffbb00"
                       fontSize="1.3rem"
                       padding="0.5rem 0.8rem"
                       BorderColor="#38383899"
-                      onClick={() =>{
-                        // handleClickRemove(item)
+                      onClick={() => {
+                        handleClickRemove(item)
                       }}
                     >
                       -1
@@ -110,13 +90,18 @@ const Carrinho = () => {
                       padding="0.5rem 0.8rem"
                       BorderColor="#38383899"
                       onClick={() => {
-                        handleClickAdd(item, index);
+                        handleClickAdd(item);
 
                       }}
                     >
                       +1
                     </StyledButton>
                   </StyledFlex>
+                </div>
+                <div>
+                <StyledH3 color="#383838">R${
+                    itemPrice ? itemPrice : item.price
+                  }</StyledH3>
                 </div>
               </div>
             </StyledFlex>

@@ -11,7 +11,7 @@ import { StyledFlex } from "../../componentes/Flex.style";
 import { StyledH3, StyledH4 } from "../../componentes/Font.style";
 import { StyledImg } from "../../componentes/Img.style";
 const Products = () => {
-  const { loading, setLoading, search, categoryId, setCategoryId, setSearch, setValueItemCarrinho} =
+  const { loading, setLoading, search, categoryId, setCategoryId, setSearch, setProduct} =
     useAppProvider();
   const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState(null);
@@ -149,7 +149,7 @@ const Products = () => {
                             backgroudColor=" #CF5D00"
                             color="#ffff"
                             onClick={() => {
-                              setValueItemCarrinho(product)
+                              setProduct(product)
                             }}
                           >
                             Adicionar no Carrinho

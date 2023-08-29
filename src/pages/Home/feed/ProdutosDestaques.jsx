@@ -19,6 +19,7 @@ const ProdutosDestaques = () => {
     setCategoryId,
     category,
     setCategory,
+    setProduct
   } = useAppProvider();
   const navigate = useNavigate();
 
@@ -111,7 +112,7 @@ const ProdutosDestaques = () => {
                     fontSize="1.2rem"
                     className={styles.addCarrinho}
                     onClick={() => {
-      
+                      setProduct(result)
                     }}
                   >
                     Adicionar no carrinho

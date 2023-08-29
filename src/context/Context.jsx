@@ -8,18 +8,27 @@ export function AppProvider({ children }) {
   const [categoryId, setCategoryId] = useState(null);
   const [category, setCategory] = useState(null);
   const [search, setSearch] = useState(null);
-  const [valueItemCarrinho, setValueItemCarrinho] = useState();
-  const [listProducts, setProducts] = useState();
-  useEffect(() =>{
+  const [product, setProduct] = useState(null);
+  const [listProducts, setListProducts] = useState([]);
+
+  useEffect(() => {
     const upgrade = JSON.parse(window.localStorage.getItem('listProducts') || '[]');
-    setProducts(upgrade);
-  },[valueItemCarrinho])
-    useEffect(() =>{
-      if(listProducts && !listProducts.includes(valueItemCarrinho)){
-        const listUpgrade = [...listProducts, valueItemCarrinho]
-        window.localStorage.setItem('listProducts', JSON.stringify(listUpgrade));
-      }
-    },[valueItemCarrinho])
+    setListProducts(upgrade);
+  }, [product]);
+
+  useEffect(() => {
+    if (product && !listProducts.some(item => item.id === product.id)) {
+      // Verificar se o produto já está no carrinho pelo id
+      const updatedArray = [...listProducts, product];
+      setListProducts(updatedArray);
+      window.localStorage.setItem('listProducts', JSON.stringify(updatedArray));
+      updatedArray && updatedArray.map((item) =>{
+        localStorage.setItem(item.id, JSON.stringify(item.price))
+      })
+    }
+  
+  }, [product, listProducts]);
+
   const contextValue = {
     loading,
     setLoading,
@@ -31,8 +40,9 @@ export function AppProvider({ children }) {
     setCategory,
     search,
     setSearch,
-    valueItemCarrinho, 
-    setValueItemCarrinho
+    setProduct,
+    product,
+    listProducts
   };
 
   return (
