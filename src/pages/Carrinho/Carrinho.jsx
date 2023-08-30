@@ -1,58 +1,79 @@
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { StyledFlex } from "../../componentes/Flex.style";
 import { StyledImg } from "../../componentes/Img.style";
 import { StyledH2, StyledH3, StyledParagrafo } from "../../componentes/Font.style";
 import { StyledButton } from "../../componentes/Buttom.style";
 import styles from "../../assets/css/Carrinho/Carrinho.module.css";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { useAppProvider } from "../../context/Context";
+import IconLixeira from "../../assets/img/iconLixeira.svg"
+
 const Carrinho = () => {
-  const navigate = useNavigate()
-  const {product} = useAppProvider()
-  const [listProducts, setProducts] = useState()
-  const [itemPrice, setItemPrice] = useState(null)
+  const navigate = useNavigate();
+  const { product, setRemoveItem, removeItem } = useAppProvider();
+  const [listProducts, setProducts] = useState([]);
+  const [itemPrice, setItemPrice] = useState([]);
+  const [modifcPrice, setModificPrice] = useState(false);
+
   useEffect(() => {
-    const upgrade = JSON.parse(window.localStorage.getItem('listProducts'));
+    const upgrade = JSON.parse(window.localStorage.getItem("listProducts"));
     setProducts(upgrade);
-    if (upgrade) {
-      upgrade.forEach((item) => {
-        localStorage.setItem(item.id, JSON.stringify(item.price));
-      });
-    }
-  }, [product, ])
-  const handleClickAdd = (data) => {
-    const price = window.localStorage.getItem(data.id)
+    setItemPrice(JSON.parse(window.localStorage.getItem("priceMap")));
+    setRemoveItem(false)
+  }, [product,removeItem]);
 
-    const qnt =
-      Number(price)
-        ?
-        Number(price) + Number(data.price)
-        :
-        Number(data.price) + Number(data.price)
+  const handleClickAdd = (data, index) => {
+    setModificPrice(true);
+    const price = JSON.parse(window.localStorage.getItem("priceMap"));
+    const updateArray = [...price];
+    const qnt = updateArray
+      ? Number(updateArray[index].price) + Number(data.price)
+      : Number(data.price) + Number(data.price);
+    updateArray[index] = { ...updateArray[index], price: qnt };
+    window.localStorage.setItem("priceMap", JSON.stringify(updateArray));
+  };
 
-    window.localStorage.setItem(data.id, Number(qnt))
-
-  }
-  const handleClickRemove = (data) => {
-    const price = window.localStorage.getItem(data.id)
-    const value = Number(price) - Number(data.price);
-    if(value < data.price){
+  const handleClickDecrease = (data, index) => {
+    setModificPrice(true);
+    const price = JSON.parse(window.localStorage.getItem("priceMap"));
+    const updateArray = [...price];
+    const qnt = updateArray && Number(updateArray[index].price) - Number(data.price);
+    if (updateArray[index].price <= data.price) {
       return data.price;
     }
-    window.localStorage.setItem(data.id, Number(value))
+    updateArray[index] = { ...updateArray[index], price: qnt };
+    window.localStorage.setItem("priceMap", JSON.stringify(updateArray));
+  };
+
+  useEffect(() => {
+    if (modifcPrice) {
+      const storage = JSON.parse(window.localStorage.getItem("priceMap"));
+      setItemPrice(storage);
+    }
+    setModificPrice(false);
+  }, [modifcPrice, itemPrice, listProducts]);
+
+  const handleClickRemove = (index) => {
+    console.log('ativo')
+    const updatedArray = listProducts.filter((_, i) => i !== index);
+    localStorage.setItem('listProducts', JSON.stringify(updatedArray));
   }
 
   return (
-    <section className={`${'container'} ${styles.carrinho}`}>
-      <div >
-        <ul className={styles.gridCarrinho}>
-          <li>Descrição</li>
-          <li>Quantidade</li>
-          <li>SubTotal</li>
-        </ul>
-      </div>
-      {listProducts ? (
-        listProducts.map((item) => {
+    <section className={`${"container"} ${styles.carrinho}`}>
+
+      {listProducts.length && (
+        <div>
+          <ul className={styles.grid}>
+            <li>Descrição</li>
+            <li>Quantidade</li>
+            <li>SubTotal</li>
+          </ul>
+        </div>
+      )}
+      {listProducts.length ? (
+        listProducts.map((item, index) => {
+          const priceItem = itemPrice && itemPrice[index] ? itemPrice[index].price : 0;
           return (
             <StyledFlex
               flexDirection="column"
@@ -61,15 +82,15 @@ const Carrinho = () => {
               className={styles.carrinho}
             >
               <div className={styles.gridCarrinho}>
-                <StyledFlex
-                  alignitens="center" gap='10px'>
+                <StyledFlex alignitens="center" gap="10px">
                   <StyledImg
                     maxWidth="140px"
                     src={item.thumbnail.replace(/\w\.jpg/gi, "W.jpg")}
-                  ></StyledImg>
-                  <StyledParagrafo className={styles.titleProduct} fontSize="1.25rem">{item.title}</StyledParagrafo>
-                </StyledFlex
-                >
+                  />
+                  <StyledParagrafo className={styles.titleProduct} fontSize="1.25rem">
+                    {item.title}
+                  </StyledParagrafo>
+                </StyledFlex>
                 <div>
                   <StyledFlex gap="1rem" justifycontent="center">
                     <StyledButton
@@ -78,20 +99,18 @@ const Carrinho = () => {
                       padding="0.5rem 0.8rem"
                       BorderColor="#38383899"
                       onClick={() => {
-                        handleClickRemove(item)
+                        handleClickDecrease(item, index);
                       }}
                     >
                       -1
                     </StyledButton>
-
                     <StyledButton
                       backgroudColor="#ffbb00"
                       fontSize="1.3rem"
                       padding="0.5rem 0.8rem"
                       BorderColor="#38383899"
                       onClick={() => {
-                        handleClickAdd(item);
-
+                        handleClickAdd(item, index);
                       }}
                     >
                       +1
@@ -99,13 +118,15 @@ const Carrinho = () => {
                   </StyledFlex>
                 </div>
                 <div>
-                <StyledH3 color="#383838">R${
-                    itemPrice ? itemPrice : item.price
-                  }</StyledH3>
+                  <StyledParagrafo fontSize="1.5rem">{priceItem}</StyledParagrafo>
                 </div>
+                <div><button onClick={() => {
+                  handleClickRemove(index)
+                  setRemoveItem(true)
+                }}><img src={IconLixeira} alt="iconeLixeira" /></button></div>
               </div>
             </StyledFlex>
-          )
+          );
         })
       ) : (
         <div className={styles.notProduct}>

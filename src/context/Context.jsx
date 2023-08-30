@@ -10,24 +10,36 @@ export function AppProvider({ children }) {
   const [search, setSearch] = useState(null);
   const [product, setProduct] = useState(null);
   const [listProducts, setListProducts] = useState([]);
-
+  const [removeItem, setRemoveItem] = useState(null)
   useEffect(() => {
-    const upgrade = JSON.parse(window.localStorage.getItem('listProducts') || '[]');
+    const upgrade = JSON.parse(
+      window.localStorage.getItem("listProducts") || "[]"
+    );
     setListProducts(upgrade);
   }, [product]);
 
   useEffect(() => {
-    if (product && !listProducts.some(item => item.id === product.id)) {
-      // Verificar se o produto já está no carrinho pelo id
+    if (product && !listProducts.some((item) => item.id === product.id)) {
       const updatedArray = [...listProducts, product];
       setListProducts(updatedArray);
-      window.localStorage.setItem('listProducts', JSON.stringify(updatedArray));
-      updatedArray && updatedArray.map((item) =>{
-        localStorage.setItem(item.id, JSON.stringify(item.price))
-      })
+      window.localStorage.setItem(
+        "listProducts",
+        JSON.stringify(updatedArray)
+      );
     }
-  
   }, [product, listProducts]);
+
+  useEffect(() => {
+    if (listProducts) {
+      const priceMap = JSON.parse(localStorage.getItem("priceMap") || "[]");
+      const arrayUpdate = [...priceMap];
+      listProducts.forEach((item, i) => {
+        arrayUpdate[i] = { 'price': item.price };
+      });
+
+      localStorage.setItem("priceMap", JSON.stringify(arrayUpdate));
+    }
+  }, [listProducts]);
 
   const contextValue = {
     loading,
@@ -42,13 +54,13 @@ export function AppProvider({ children }) {
     setSearch,
     setProduct,
     product,
-    listProducts
+    listProducts,
+    removeItem,
+    setRemoveItem
   };
 
   return (
-    <AppContext.Provider value={contextValue}>
-      {children}
-    </AppContext.Provider>
+    <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
   );
 }
 

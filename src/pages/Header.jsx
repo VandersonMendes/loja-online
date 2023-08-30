@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate()
   const [valueSearch, setValueSearch] = useState(null);
-  const { setSearch, search, product, listProducts} = useAppProvider();
+  const { setSearch, search, product, listProducts, removeItem} = useAppProvider();
   const HandleInput = ({ target }) => {
     setValueSearch(target.value)
   }
@@ -32,7 +32,7 @@ const Header = () => {
   useEffect(() =>{
     const carrinho = JSON.parse(localStorage.getItem("listProducts"));
     setCarrinhoList(carrinho)
-  },[product, listProducts])
+  },[product, listProducts, removeItem])
 
   return (
     <header>

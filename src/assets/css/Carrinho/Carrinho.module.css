@@ -1,9 +1,9 @@
 .carrinho{
     margin: 4rem auto;
 }
-.gridCarrinho{
+.gridCarrinho, .grid{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr 1fr 100px;
     gap: 0.5rem;
     justify-items: center;
     align-items: center;
