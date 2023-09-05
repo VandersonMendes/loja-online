@@ -31,7 +31,9 @@ const Header = () => {
 
   useEffect(() =>{
     const carrinho = JSON.parse(localStorage.getItem("listProducts"));
-    setCarrinhoList(carrinho)
+    if(carrinho){
+      setCarrinhoList(carrinho)
+    }
   },[product, listProducts, removeItem])
 
   return (
@@ -83,7 +85,7 @@ const Header = () => {
             className={styles.iconCarrinho}
             maxWidth="35%"
             width="100%"
-            maxWidthEnpoiter1="40%"
+            maxWidthEnpoiter1="30%"
             src={IconCarrinho}
             alt="Icone carrinho"
           />

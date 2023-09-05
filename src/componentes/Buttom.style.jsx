@@ -14,4 +14,7 @@ export const StyledButton = styled.button`
     @media (max-width:800px) {
         font-size:0.9rem;
     }
+    &:focus{
+        outline:none;
+    }
 `
