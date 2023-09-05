@@ -52,3 +52,6 @@ body {
     transform: translate(0);
   }
 }
+.swiper-button-prev{
+  background-color: black !important;
+}

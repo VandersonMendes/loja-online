@@ -158,3 +158,29 @@ export const StyledParagrafo = styled.p`
         font-size: 0.8rem;
     }
 `
+export const StyledParagrafo1 = styled.p`
+    @media (min-width:1400px) {
+        font-size: ${(prosp) => prosp.fontSize || '2.25rem'};
+    }
+    font-size: 1.25rem;
+    letter-spacing: ${(prosp) => prosp.letterSpacing};
+    color: ${(prosp) => prosp.color};
+    background-color: ${(prosp) => prosp.backgroundColor};
+    font-weight: ${(prosp) => prosp.weight};
+    line-height: ${(prosp) => prosp.lineHeight};
+    border-radius: ${(prosp) => prosp.borderRadius};
+    cursor: pointer;
+    @media (max-width:1200px) {
+        font-size: 1.15rem;
+    }
+    @media (max-width:700px) {
+        font-size:1.5rem;
+        font-weight:700;
+    }
+    @media (max-width:600px) {
+        font-size:1.3rem;
+    }
+    @media (max-width:400px) {
+        font-size: 1.3rem;
+    }
+`

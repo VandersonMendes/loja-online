@@ -3,13 +3,12 @@ import formatCurrency from "../../servises/FormatPrice";
 import { useNavigate } from "react-router-dom";
 import { StyledFlex } from "../../componentes/Flex.style";
 import { StyledImg } from "../../componentes/Img.style";
-import { StyledH2, StyledParagrafo } from "../../componentes/Font.style";
+import { StyledH2, StyledParagrafo,StyledParagrafo1 } from "../../componentes/Font.style";
 import { StyledButton } from "../../componentes/Buttom.style";
 import styles from "../../assets/css/Carrinho/Carrinho.module.css";
 import { useAppProvider } from "../../context/Context";
 import IconLixeira from "../../assets/img/iconLixeira.svg"
 import IconCarrinho from "../../assets/img/carrinhoDeCompas1.svg";
-import { CSSTransition } from 'react-transition-group';
 
 const Carrinho = () => {
   const navigate = useNavigate();
@@ -18,7 +17,6 @@ const Carrinho = () => {
   const [itemPrice, setItemPrice] = useState([]);
   const [modifcPrice, setModificPrice] = useState(false);
   const [resultTotal, setResultTotal] = useState(null)
-  const [cliqueUnico, setCliqueUnico] = useState(false);
 
   useEffect(() => {
     const upgrade = JSON.parse(window.localStorage.getItem("listProducts"));
@@ -66,12 +64,7 @@ const Carrinho = () => {
     localStorage.setItem('listProducts', JSON.stringify(updatedArrayProducts));
 
   }
-  const handleCalCep = (e) => {
-    e.preventDefault();
-    if (!cliqueUnico) {
-      setCliqueUnico(true)
-    }
-  }
+
   useEffect(() => {
     const price = JSON.parse(window.localStorage.getItem("priceMap"));
     const result = price && price.reduce((total, product) => Number(total) + Number(product.price), 0)
@@ -79,7 +72,7 @@ const Carrinho = () => {
   }, [modifcPrice, listProducts, removeItem])
   return (
     <section className={`${"container"} ${styles.carrinhoContainer}`}>
-      <StyledFlex alignitens="center" >
+      <StyledFlex alignitens="center" gap="10px" >
       {listProducts && listProducts.length ?(
               <StyledFlex alignitens="center" >
 
@@ -104,12 +97,12 @@ const Carrinho = () => {
                     <th>Preço</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className={styles.tableBody}>
                   {listProducts.map((item, index) => {
                     const priceItem = itemPrice && itemPrice[index] ? itemPrice[index].price : '';
                     return (
                       <tr key={item} className={styles.gridCardProducts}>
-                        <td>
+                        <td className={styles.img}>
                           <StyledFlex alignitens="center" gap="10px">
                             <StyledImg
                               maxWidth="100px"
@@ -120,7 +113,7 @@ const Carrinho = () => {
                             </StyledParagrafo>
                           </StyledFlex>
                         </td>
-                        <td>
+                        <td className={styles.qtd}>
                           <StyledFlex gap="0.5rem" justifycontent="center">
                             <StyledButton
                               backgroudColor="#ffbb00"
@@ -154,13 +147,13 @@ const Carrinho = () => {
                             </StyledButton>
                           </StyledFlex>
                         </td>
-                        <td>
+                        <td className={styles.price}>
                           <div>
-                            <StyledParagrafo fontSize="1.3rem">{formatCurrency(priceItem, 'BRL')}</StyledParagrafo>
+                            <StyledParagrafo1 fontSize="1.3rem">{formatCurrency(priceItem, 'BRL')}</StyledParagrafo1>
                           </div>
                         </td>
                         <td>
-                          <div><button className={styles.buttonRemove} onClick={() => {
+                          <div className={styles.cardLixeira}><button className={styles.buttonRemove} onClick={() => {
                             handleClickRemove(index)
                               / setRemoveItem(true)
                           }}><StyledImg className={styles.IconLixeira} src={IconLixeira} alt="iconeLixeira" /></button></div>
@@ -176,15 +169,15 @@ const Carrinho = () => {
                   <div className={styles.gridResult}>
                     <div >
                       <StyledParagrafo fontSize="1.4rem">SubTotal:</StyledParagrafo>
-                      <StyledParagrafo fontSize="1.4rem">Frete:</StyledParagrafo>
+                      <StyledParagrafo fontSize="1.4rem" >Frete:</StyledParagrafo>
                       <StyledParagrafo fontSize="1.4rem" className={styles.resultTot}>Total:</StyledParagrafo>
                     </div>
                     <div >
                       <StyledParagrafo fontSize="1.4rem">{resultTotal && formatCurrency(resultTotal, 'BRL')}
                       </StyledParagrafo>
-                      <StyledParagrafo fontSize="1.4rem">Grátis
+                      <StyledParagrafo fontSize="1.4rem" color=" #11cc33">Grátis
                       </StyledParagrafo>
-                      <StyledParagrafo className={styles.resultTot} fontSize="1.4rem">{cliqueUnico ? formatCurrency(resultTotal + 10, 'BRL') : formatCurrency(resultTotal, 'BRL')}
+                      <StyledParagrafo className={styles.resultTot} fontSize="1.4rem">{ formatCurrency(resultTotal, 'BRL') }
                       </StyledParagrafo>
                       <StyledFlex>
                       </StyledFlex>
@@ -193,7 +186,11 @@ const Carrinho = () => {
                   </div>
 
                 </StyledFlex>
-                <StyledButton fontSize="1.2rem" color="#fff" padding="0.2rem 0.8rem" className={styles.buttonFinalizar}>Finalizar Comprar</StyledButton>
+                <StyledButton fontSize="1.2rem" color="#fff" padding="0.2rem 0.8rem" className={styles.buttonFinalizar} onClick={() =>{
+                  window.localStorage.clear('')
+                  navigate('/')
+                  window.location.reload()
+                }}>Finalizar Comprar</StyledButton>
               </section>
             </StyledFlex>
           ) : (
@@ -208,94 +205,3 @@ const Carrinho = () => {
 };
 
 export default Carrinho;
- // <StyledFlex
-                //   flexDirection="column"
-                //   key={item}
-                //   gap="1rem"
-                //   className={styles.carrinho}
-                // >
-                //   <StyledFlex justifycontent="space-around" gap="3rem">
-
-                //     <section className={styles.gridCarrinho}>
-                //       <StyledFlex alignitens="center" gap="10px">
-                //         <StyledImg
-                //           maxWidth="80px"
-                //           src={item.thumbnail.replace(/\w\.jpg/gi, "W.jpg")}
-                //         />
-                //         <StyledParagrafo className={styles.titleProduct} fontSize="1rem">
-                //           {item.title}
-                //         </StyledParagrafo>
-                //       </StyledFlex>
-                //       <div>
-                //         <StyledFlex gap="0.5rem" justifycontent="center">
-                //           <StyledButton
-                //             backgroudColor="#ffbb00"
-                //             fontSize="1rem"
-                //             padding="0.2rem 0.5rem"
-                //             BorderColor="#38383899"
-                //             onClick={() => {
-                //               handleClickDecrease(item, index);
-                //             }}
-                //           >
-                //             -
-                //           </StyledButton>
-                //           <StyledButton
-                //             backgroudColor="#ffbb00"
-                //             fontSize="1rem"
-                //             padding="0.2rem 0.5rem"
-                //             BorderColor="#38383899"
-                //           >
-                //             {Math.round(priceItem) / Math.round(item.price)}
-                //           </StyledButton>
-                //           <StyledButton
-                //             backgroudColor="#ffbb00"
-                //             fontSize="1.3rem"
-                //             padding="0.2rem 0.5rem"
-                //             BorderColor="#38383899"
-                //             onClick={() => {
-                //               handleClickAdd(item, index);
-                //             }}
-                //           >
-                //             +
-                //           </StyledButton>
-                //         </StyledFlex>
-                //       </div>
-                //       <div>
-                //         <StyledParagrafo fontSize="1.3rem">{formatCurrency(priceItem, 'BRL')}</StyledParagrafo>
-                //       </div>
-                //       <div><button className={styles.buttonRemove} onClick={() => {
-                //         handleClickRemove(index)
-                //         setRemoveItem(true)
-                //       }}><img src={IconLixeira} alt="iconeLixeira" /></button></div>
-                //     </section>
-                //     <section className={styles.result}>
-                //       <StyledFlex justifycontent="space-around" gap="2rem" alignitens="">
-                //         {/* <StyledFlex flexDirection='column' justifycontent='space-between'>
-                //           <form onSubmit={(e) => handleCalCep(e)} action="" className={styles.calcFrete}>
-                //             <input type="number" maxLength="8" placeholder="Digite seu cep" required />
-                //             <StyledButton fontSize="1.2rem" backgroudColor="#77e98c" BorderColor="#00da28" color="#fff" disabled={cliqueUnico} >Calcular Frete</StyledButton>
-                //           </form>
-                //           <div><StyledButton fontSize="1.2rem" backgroudColor="#993399 " BorderColor="#00da28" color="#fff" onClick={() => navigate('/products')}>Ver mais produtos</StyledButton></div>
-                //         </StyledFlex> */}
-                //         <div className={styles.gridResult}>
-                //           <div>
-                //             <StyledParagrafo fontSize="1.4rem">SubTotal:</StyledParagrafo>
-                //             <StyledParagrafo fontSize="1.4rem">Frete:</StyledParagrafo>
-                //             <StyledParagrafo fontSize="1.4rem">Total:</StyledParagrafo>
-                //           </div>
-                //           <div>
-                //             <StyledParagrafo fontSize="1.4rem">{resultTotal && formatCurrency(resultTotal, 'BRL')}
-                //             </StyledParagrafo>
-                //             <StyledParagrafo fontSize="1.4rem">{cliqueUnico ? formatCurrency(10, 'BRL') : 'R$0'}
-                //             </StyledParagrafo>
-                //             <StyledParagrafo fontSize="1.4rem">{cliqueUnico ? formatCurrency(resultTotal + 10, 'BRL') : formatCurrency(resultTotal + 10, 'BRL')}
-                //             </StyledParagrafo>
-                //             <StyledFlex>
-                //             </StyledFlex>
-                //           </div>
-                //           <StyledButton fontSize="1.2rem" backgroudColor="#50D45D" BorderColor="#00da28" color="#fff" className={styles.finalizeCompra}>Finalizar Comprar</StyledButton>
-                //         </div>
-                //       </StyledFlex>
-                //     </section>
-                //   </StyledFlex>
-                // </StyledFlex>

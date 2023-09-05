@@ -64,7 +64,11 @@
     border: 4px solid #38383809;
     background-color: #c6c7c930;
 }
-
+.flexProducts {
+    background: rgb(244, 244, 244);
+    border-radius: 20px;
+    overflow: hidden;
+}
 .buttonRemove {
     border: none;
     cursor: pointer;
@@ -86,13 +90,19 @@ td,
 th {
     padding: 1rem 1.5rem;
 }
-
-table tr {
-    border-radius: 20px;
+.tableHeader{
+    margin-bottom: 2rem;
+}
+table{
+    padding: 10px;
 }
 
-table tr:nth-child(even) {
+.tableHeader {
     background-color: rgba(218, 218, 218, 0.536);
+}
+
+.tableBody tr {
+    box-shadow: rgba(70, 70, 70, 0.114) 1px 1px 0.5px;
     border-radius: 30px;
 }
 
@@ -106,6 +116,7 @@ table tr:nth-child(even) {
     border-radius: 15px;
     text-align: left;
     box-shadow: #13ae1679 0px 1px 4px;
+    margin-bottom: 2rem;
 }
 
 .resumo {
@@ -144,37 +155,24 @@ table tr:nth-child(even) {
     .IconLixeira {
         width: 25px;
     }
+    td,
+th {
+    padding: 0.7rem 1.2rem;
+}
 }
 
 @media (max-width:950px) {
     .flexProducts {
         flex-direction: column-reverse;
-        align-items: center
+        align-items: center;       
     }
     .result{
         width: 500px;
     }
 }
-
-@media (max-width:600px) {
+@media (max-width:700px) {
     .carrinho {
         margin: 1rem 1rem;
-    }
-
-    .gridCarrinho {
-        grid-template-columns: repeat(1, 1fr);
-    }
-
-    .titleProduct {
-        text-align: center;
-    }
-
-    .preco {
-        display: none;
-    }
-
-    .resultContainer {
-        position: static;
     }
     .tableHeader{
         display: none;
@@ -182,13 +180,38 @@ table tr:nth-child(even) {
     .IconLixeira {
         width: 20px;
     }
+    .cardLixeira{
+        position: absolute;
+        bottom: 13px;
+        right: 30px;
+    }
     .gridCardProducts{
+        position: relative;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        align-items: center;
+        grid-template-rows: auto;
+        grid-template-areas:
+        "img img"  
+        "price price"
+        "qtd qtd";
+        gap: 5px;
         justify-items: center;
-        align-content: space-evenly;
-        justify-content: center;
     }
+    .qtd{
+        grid-area: qtd;
+    }
+    .price{
+        grid-area: price;
+        padding: 0;
+        text-align: center;
+        width: 100px;
+    }
+    .img{
+        grid-area: img;
+    }
+    td,
+th {
+    padding: 0.1rem 0.5rem;
+}
 }
 

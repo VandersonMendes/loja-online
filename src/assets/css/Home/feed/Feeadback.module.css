@@ -4,14 +4,28 @@
 }
 .containerFeeadback{
     max-width: 900px;
-    margin: 4rem auto;
-    position: relative;
+    margin: 1rem auto;
+    padding: 2rem;
     padding-bottom: 4rem;
+
 }
-.containerFeeadback h2{
-    padding: 2rem 1rem;
+
+.imgFeeadback{
+    outline: 4px solid rgb(237, 237, 237);
+    border-radius: 100px;
+    position: relative;
+    bottom: -40px;
 }
-.text p, h4{
-    padding: 1rem;
-    border-radius: 15px;
+.text{
+    background:#f9cb24c2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.paragrafoFeeadback{
+    width: 400px;
+    text-align: center;
+    padding: 2.5rem 0;
 }
