@@ -43,6 +43,10 @@
 .gridResult div p {
     margin-bottom: 0.5rem;
 }
+.gridResult div p:last-child {
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
 
 .flexProducts {
     justify-content: space-between;

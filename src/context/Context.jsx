@@ -33,8 +33,9 @@ export function AppProvider({ children }) {
     if (listProducts) {
       const priceMap = JSON.parse(localStorage.getItem("priceMap") || "[]");
       const arrayUpdate = [...priceMap];
+      console.log(priceMap)
       listProducts.forEach((item, i) => {
-        arrayUpdate[i] = { 'price': item.price };
+        arrayUpdate[i] = { 'price': item.price, 'quantity':  priceMap.quantity || 1};
       });
 
       localStorage.setItem("priceMap", JSON.stringify(arrayUpdate));

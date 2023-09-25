@@ -11,7 +11,7 @@ import { StyledFlex } from "../../componentes/Flex.style";
 import { StyledH3, StyledH4 } from "../../componentes/Font.style";
 import { StyledImg } from "../../componentes/Img.style";
 const Products = () => {
-  const { loading, setLoading, search, categoryId, setCategoryId, setSearch, setProduct} =
+  const { loading, setLoading, search, categoryId, setCategoryId, setSearch, setProduct } =
     useAppProvider();
   const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState(null);
@@ -72,10 +72,10 @@ const Products = () => {
               >
                 {categories &&
                   categories.map((category) => (
-                    <li className={styles.listCategories}  key={category}>
+                    <li className={styles.listCategories} key={category}>
                       <StyledButton
                         fontSize="1.3rem"
-                  
+
                         backgroudColor="#f7f7f7"
                         BorderColor="#f1f1f18d"
                         padding="0.2rem 1rem"
@@ -128,7 +128,7 @@ const Products = () => {
                         <div className={styles.img}>
                           <StyledImg
                             src={product.thumbnail.replace(/\w\.jpg/gi, "W.jpg")}
-                            maxWidth="17rem"
+                            maxWidth="10rem"
                           />
                         </div>
                         <div className={styles.text}>

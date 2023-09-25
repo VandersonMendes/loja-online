@@ -29,10 +29,12 @@ const Carrinho = () => {
     setModificPrice(true);
     const price = JSON.parse(window.localStorage.getItem("priceMap"));
     const updateArray = [...price];
-    const qnt = updateArray
+    const value = updateArray
       ? Number(updateArray[index].price) + Number(data.price)
       : Number(data.price) + Number(data.price);
-    updateArray[index] = { ...updateArray[index], price: qnt };
+
+    const qtd = updateArray[index]?.quantity + 1
+    updateArray[index] = { ...updateArray[index], price: value, quantity: qtd };
     window.localStorage.setItem("priceMap", JSON.stringify(updateArray));
   };
 
@@ -40,11 +42,15 @@ const Carrinho = () => {
     setModificPrice(true);
     const price = JSON.parse(window.localStorage.getItem("priceMap"));
     const updateArray = [...price];
+    const qtd = updateArray[index]?.quantity - 1
     const qnt = updateArray && Number(updateArray[index].price) - Number(data.price);
-    if (updateArray[index].price <= data.price) {
+    if (updateArray[index].price <= data.price ) {
       return data.price;
     }
-    updateArray[index] = { ...updateArray[index], price: qnt };
+    if(updateArray[index].quantity <= 0){
+      return 0;
+    }
+    updateArray[index] = { ...updateArray[index], price: qnt ,quantity: qtd};
     window.localStorage.setItem("priceMap", JSON.stringify(updateArray));
   };
 
@@ -100,6 +106,8 @@ const Carrinho = () => {
                 <tbody className={styles.tableBody}>
                   {listProducts.map((item, index) => {
                     const priceItem = itemPrice && itemPrice[index] ? itemPrice[index].price : '';
+                   const quantity = itemPrice && itemPrice[index] ? itemPrice[index].quantity : ''
+                  
                     return (
                       <tr key={item} className={styles.gridCardProducts}>
                         <td className={styles.img}>
@@ -132,7 +140,7 @@ const Carrinho = () => {
                               padding="0.2rem 0.5rem"
                               BorderColor="#38383899"
                             >
-                              {Math.round(priceItem) / Math.round(item.price)}
+                              {quantity && quantity}
                             </StyledButton>
                             <StyledButton
                               backgroudColor="#ffbb00"
