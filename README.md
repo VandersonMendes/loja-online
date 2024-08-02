@@ -16,7 +16,7 @@
 
 ## 🧾 About
 
-**LOJA ONILINE** é um projeto onde vc consome API de produtos onde vc pode consultar os os protudos, e pode adiciona-los em uma carrinho, onde pode manipular a quantidade.
+**LOJA ONLINE** projeto onde vc consome API de produtos onde vc pode consultar os os protudos, e pode adiciona-los em uma carrinho, onde pode manipular.
 
 ## 🔧 Tools
 
@@ -24,7 +24,6 @@
 - [Vite ](https://vitejs.dev/)
 - [Axios](https://axios-http.com/ptbr/docs/intro)
 - [Styled-components](https://styled-components.com/)
-- HTML
 - CSS
 
 
